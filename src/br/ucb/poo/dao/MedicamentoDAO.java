@@ -7,9 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import br.ucb.poo.beans.Medicamento;
 import br.ucb.poo.beans.Laboratorio;
-import br.ucb.poo.dao.LaboratorioDAO;
+import br.ucb.poo.beans.Medicamento;
 import br.ucb.poo.factory.Conexao;
 import br.ucb.poo.views.LaboratorioView;
 
@@ -76,9 +75,57 @@ public class MedicamentoDAO {
 	}
 	
 	
+
+	public void addMedicamento(Medicamento medicamento, Integer id){
+		try {
+			LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
+			Laboratorio laboratorio = new Laboratorio();
+
+			laboratorio = laboratorioDAO.retrieveLaboratorioDeID(id);
+
+			// Lab não encontrado...
+			while(laboratorio.getId_laboratorio() == -1) {
+
+		        Scanner sc = new Scanner(System.in);
+		        String opcaoMenuCriarLaboratorio = "";
+		        
+				System.out.println("Laboratorio não cadastrado!");
+				System.out.println("L) Listar todos laboratórios;");
+				System.out.println("I) Cadastrar novo laboratório;");
+				opcaoMenuCriarLaboratorio = sc.next();
+				
+				switch(opcaoMenuCriarLaboratorio) {
+				case "L":
+				case "l":
+					LaboratorioView laboratorioView = new LaboratorioView();
+					laboratorioView.listarTodosLaboratorios();
+
+					System.out.println("Encontrou o Laboratorio?");
+					
+				case "I":
+				case "i":
+					
+					break;
+				}
+			}
+			
+			String sql = "INSERT INTO medicamento (id_laboratorio, preco, dt_vencimento, nome_medicamento, qtd_estoque) VALUES (?,?,?,?,?)";
+			PreparedStatement pstmt = connection.prepareStatement(sql);
+			pstmt.setInt(1, laboratorio.getId_laboratorio());
+			pstmt.setFloat(2, medicamento.getPreco());
+			pstmt.setDate(3, medicamento.getDt_vencimento());
+			pstmt.setString(4, medicamento.getNome_medicamento());
+			pstmt.setInt(5, medicamento.getQtd_estoque());
+			pstmt.execute();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	public ArrayList<Medicamento> retrieveMedicamento(){
-
 
 		String sql = "SELECT * FROM medicamento";
 		
@@ -89,14 +136,6 @@ public class MedicamentoDAO {
 			ResultSet rs = pstmt.executeQuery(sql);
 			while(rs.next()){
 				Medicamento medicamento = new Medicamento();
-				
-
-//				private Integer id_medicamento;
-//				private Integer id_laboratorio;
-//				private Float preco;
-//				private Date dt_vencimento;
-//				private String nome_medicamento;
-//				private Integer qtd_estoque;
 
 				medicamento.setId_medicamento(rs.getInt("id_medicamento"));
 				medicamento.setId_laboratorio(rs.getInt("id_laboratorio"));
@@ -149,9 +188,7 @@ public class MedicamentoDAO {
 	
 	public void deletarMedicamento(Integer id) {
 		
-		
 		Medicamento medicamento = retrieveMedicamentoFromId(id);
-	
 
 		System.out.println("ID - Nome");
 		
@@ -176,7 +213,6 @@ public class MedicamentoDAO {
               // execute the preparedstatement
               preparedStmt.execute();
               preparedStmt.close();
-          
           }
 
         } catch(SQLException e) {

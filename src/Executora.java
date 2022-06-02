@@ -55,7 +55,7 @@ public class Executora {
 			//MARK: - TELA INSERIR NOVO MEDICAMENTO
 			switch(opcaoMenuInicial) {
 			case "I":
-
+				
 				medicamento = new Medicamento();
 
 				Laboratorio laboratorio = new Laboratorio();
@@ -102,14 +102,11 @@ public class Executora {
 					System.out.println("Insira o número do lote/casa: ");
 					endereco.setNumero(sc.nextInt());
 
-
-
 					sc = new Scanner(System.in);
 
 					System.out.println("\n# Contato");
 					System.out.println("Tel. Celular: ");
 					telefones.setCelular(sc.nextLine());
-
 
 
 					sc = new Scanner(System.in);
@@ -174,33 +171,8 @@ public class Executora {
 				sc = new Scanner(System.in);
 				System.out.println("Quantidade em estoque: ");
 				medicamento.setQtd_estoque(sc.nextInt());
-
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-
-					conn = DriverManager.getConnection(url,user,pass);
-
-					Statement stmt = conn.createStatement();
-
-					String query = " insert into medicamento (id_laboratorio, preco, dt_vencimento, nome_medicamento, qtd_estoque)"  + " values (?, ?, ?, ?, ?)";
-
-					// create the mysql insert preparedstatement
-					PreparedStatement preparedStmt = conn.prepareStatement(query);
-					preparedStmt.setInt(1, medicamento.getId_laboratorio());
-					preparedStmt.setFloat(2, medicamento.getPreco());
-					preparedStmt.setDate(3, medicamento.getDt_vencimento());
-					preparedStmt.setString(4, medicamento.getNome_medicamento());
-					preparedStmt.setInt(5, medicamento.getQtd_estoque());
-
-					// execute the preparedstatement
-					preparedStmt.execute();
-
-					conn.close();
-				} catch(SQLException e) {
-					e.printStackTrace();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+				
+				medicamentoDAO.addMedicamento(medicamento, nomeLaboratorio);
 				break;
 
 				//MARK: - TELA LISTAGEM
@@ -294,7 +266,7 @@ public class Executora {
 
 						}
 						break;
-
+						
 					case "A":
 
 						//TODO: FAZER MENU PARA ESCOLHER CAMPO A SER ALTERADO 
