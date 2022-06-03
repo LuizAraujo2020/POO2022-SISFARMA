@@ -129,8 +129,9 @@ public class ControleFuncionario {
 				endereco.setId_endereco(enderecoDAO.retrieveIdEndereco(endereco));
 				telefones.setId_telefones(telefonesDAO.retrieveIdDeTelefones(telefones));
 
-				funcionario.setEndereco(endereco);
-				funcionario.setTelefones(telefones);
+				
+				enderecoDAO.addEndereco(endereco);
+				telefonesDAO.addTelefones(telefones);
 				
 				System.out.println("Insira o Departamento do Funcionario: ");
 				departamento.setNome(sc.nextLine());
@@ -260,8 +261,8 @@ public class ControleFuncionario {
 						idParaPesquisa = sc.nextInt();
 
 						funcionario = funcionarioDAO.retrieveFuncionarioFromId(idParaPesquisa);
-						endereco = enderecoDAO.retrieveEnderecoDeId(funcionario.getEndereco().getId_endereco());
-						telefones = telefonesDAO.retrieveTelefonesDeId(funcionario.getTelefones().getId_telefones());
+						endereco = enderecoDAO.retrieveEnderecoDeId(funcionario.getPessoa().getId_endereco());
+						telefones = telefonesDAO.retrieveTelefonesDeId(funcionario.getPessoa().getId_telefones());
 						cargo = cargoDAO.retrieveCargoDeId(funcionario.getId_cargo());
 						departamento = departamentoDAO.retrieveDepartamentoDeId(funcionario.getId_departamento());
 
@@ -316,55 +317,6 @@ public class ControleFuncionario {
 
 						funcionarioAtual = funcionarioDAO.retrieveFuncionarioFromId(idParaPesquisa);
 						funcionarioNovo = funcionarioAtual;
-
-
-//
-//						/// Limpar Mem Buffer
-//						sc = new Scanner(System.in);
-//
-//						System.out.println("Nome atual: " + funcionarioAtual.getNome_funcionario());
-//						funcionarioNovo.setNome_funcionario(sc.nextLine());
-//
-//						System.out.println("Preço atual: " + funcionarioAtual.getPreco());
-//						funcionarioNovo.setPreco(sc.nextFloat());
-//
-//
-//						parseDateContadorDeErros = 0;
-//
-//						do {
-//							sc = new Scanner(System.in);
-//							System.out.println("Vencimento (yyyy-MM-dd): ");
-//							String stringDate = sc.nextLine();
-//
-//							try {
-//								DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//								Date myDate = formatter.parse(stringDate);
-//								java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-//								sqlDate = new java.sql.Date(myDate.getTime());
-//
-//								funcionarioNovo.setDt_vencimento(sqlDate);
-//
-//								parseDateContadorDeErros = 0;
-//
-//							} catch (ParseException e1) {
-//								//    								e1.printStackTrace();
-//								parseDateContadorDeErros += 1;
-//								System.out.println("Data invÃ¡lida!");
-//							}
-//						}while(parseDateContadorDeErros > 0);
-//
-//
-//						System.out.println("Quantidade em estoque atual: " + funcionarioAtual.getQtd_estoque());
-//						funcionarioNovo.setQtd_estoque(sc.nextInt());
-//
-//
-//
-//						System.out.println("Deseja confirmar a alteracao?");
-//						System.out.println("Digite 's' para SALVAR:");
-//						String salvar = sc.next();
-//						if(salvar.equals("s") || salvar.equals("S")) {
-//							funcionarioDAO.updateFuncionario(funcionarioNovo, funcionarioAtual.getId_funcionario());
-//						}
 
 						break;
 

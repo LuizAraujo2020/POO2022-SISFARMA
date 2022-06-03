@@ -1,6 +1,7 @@
 package br.ucb.poo.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -155,6 +156,27 @@ public class PessoaDAO {
 			}
 		}
 		return null;
+	}
+	
+	public void updatePessoa(Pessoa pessoa) {
+		
+		try {
+            // create the java mysql update preparedstatement
+            String query = "UPDATE pessoa SET (nome = ?, cpf = ?,  dt_nascimento = ?) WHERE id_pessoa = ?";
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setString(1, pessoa.getNome());
+            preparedStmt.setString(2, pessoa.getCpf());
+            preparedStmt.setDate(3, pessoa.getDt_nascimento());
+            preparedStmt.setInt(4, pessoa.getId_pessoa());
+
+            // execute the java preparedstatement
+            preparedStmt.executeUpdate();  
+            preparedStmt.close();
+       } catch(SQLException e) {
+           e.printStackTrace();
+       } catch (Exception ex) {
+           ex.printStackTrace();
+       }
 	}
 	
 }

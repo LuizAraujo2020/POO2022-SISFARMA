@@ -19,9 +19,10 @@ public class FuncionarioDAO {
 
 	Conexao conexao = new Conexao();
 	Connection connection = conexao.conectar();
+	
+	PessoaDAO pessoaDAO = new PessoaDAO();
 
 	public void addFuncionario(Funcionario funcionario){
-		PessoaDAO pessoaDAO = new PessoaDAO();
 		
 		try {
 //			if(funcionario.getId_cargo() == -1) {
@@ -87,56 +88,6 @@ public class FuncionarioDAO {
 	}
 	
 	
-
-//	public void addFuncionario(Funcionario funcionario, Integer id){
-//		try {
-//			LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
-//			Laboratorio laboratorio = new Laboratorio();
-//
-//			laboratorio = laboratorioDAO.retrieveLaboratorioDeID(id);
-//
-//			// Lab não encontrado...
-//			while(laboratorio.getId_laboratorio() == -1) {
-//
-//		        Scanner sc = new Scanner(System.in);
-//		        String opcaoMenuCriarLaboratorio = "";
-//		        
-//				System.out.println("Laboratorio não cadastrado!");
-//				System.out.println("L) Listar todos laboratórios;");
-//				System.out.println("I) Cadastrar novo laboratório;");
-//				opcaoMenuCriarLaboratorio = sc.next();
-//				
-//				switch(opcaoMenuCriarLaboratorio) {
-//				case "L":
-//				case "l":
-//					LaboratorioView laboratorioView = new LaboratorioView();
-//					laboratorioView.listarTodosLaboratorios();
-//
-//					System.out.println("Encontrou o Laboratorio?");
-//					
-//				case "I":
-//				case "i":
-//					
-//					break;
-//				}
-//			}
-//			
-//			String sql = "INSERT INTO funcionario (id_laboratorio, preco, dt_vencimento, nome_funcionario, qtd_estoque) VALUES (?,?,?,?,?)";
-//			PreparedStatement pstmt = connection.prepareStatement(sql);
-//			pstmt.setInt(1, laboratorio.getId_laboratorio());
-//			pstmt.setFloat(2, funcionario.getPreco());
-//			pstmt.setDate(3, funcionario.getDt_vencimento());
-//			pstmt.setString(4, funcionario.getNome_funcionario());
-//			pstmt.setInt(5, funcionario.getQtd_estoque());
-//			pstmt.execute();
-//			pstmt.close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-	
-	
 	public ArrayList<Funcionario> retrieveFuncionario(){
 
 		String sql = "SELECT * FROM funcionario";
@@ -148,12 +99,6 @@ public class FuncionarioDAO {
 			ResultSet rs = pstmt.executeQuery(sql);
 			while(rs.next()){
 				Funcionario funcionario = new Funcionario();
-
-//				private Integer id_funcionario;
-//				private Integer id_cargo;
-//				private Integer id_departamento;
-//				private Float salario;
-//				private Date dt_adimissao;
 				
 				funcionario.setId_funcionario(rs.getInt("id_funcionario"));
 				funcionario.setId_cargo(rs.getInt("id_cargo"));
@@ -187,7 +132,9 @@ public class FuncionarioDAO {
 	public void updateFuncionario(Funcionario funcionarioNovo) {
 		try {
              // create the java mysql update preparedstatement
-			
+
+            pessoaDAO.updatePessoa(funcionarioNovo.getPessoa());
+            
             String query = "UPDATE funcionario SET (salario = ?, dt_adimissao = ?) WHERE id_funcionario = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setFloat(1, funcionarioNovo.getSalario());
@@ -195,13 +142,6 @@ public class FuncionarioDAO {
             preparedStmt.setInt(3, funcionarioNovo.getId_funcionario());
             preparedStmt.executeUpdate();  
 			
-            query = "UPDATE pessoa SET (salario = ?, dt_adimissao = ?) WHERE id_funcionario = ?";
-            preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString(1, funcionarioNovo.getNome_funcionario());
-            preparedStmt.setFloat(2, funcionarioNovo.getPreco());
-            preparedStmt.setDate(3, funcionarioNovo.getDt_vencimento());
-            preparedStmt.setInt(4, funcionarioNovo.getQtd_estoque());
-            preparedStmt.setInt(5, id);
 
              // execute the java preparedstatement
              preparedStmt.executeUpdate();  
@@ -220,7 +160,7 @@ public class FuncionarioDAO {
 		System.out.println("ID - Nome");
 		
 		System.out.println("--------------------------");
-		System.out.println(funcionario.getId_funcionario() + " - " + funcionario.getNome_funcionario());
+		System.out.println(funcionario.getId_funcionario() + " - " + funcionario.getNome());
 		
 		
 		try {
