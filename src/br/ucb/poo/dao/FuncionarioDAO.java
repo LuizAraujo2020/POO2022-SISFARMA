@@ -17,14 +17,15 @@ public class FuncionarioDAO {
 	Conexao conexao = new Conexao();
 	Connection connection = conexao.conectar();
 
-	public void addFuncionario(Funcionario funcionario, String nomeLab){
+	public void addFuncionario(Funcionario funcionario){
 		try {
-			LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
-			Laboratorio laboratorio = new Laboratorio();
-//			laboratorioDAO.addLaboratorio(laboratorio);
+			if(funcionario.getId_cargo() == -1) {
+				
+			}
 
-			laboratorio.setId_laboratorio(laboratorioDAO.retrieveIdLaboratorioDeNome(nomeLab));
-			laboratorio.setNome(nomeLab);
+			if(funcionario.getId_departamento() == -1) {
+				
+			}
 
 			// Lab não encontrado...
 			while(laboratorio.getId_laboratorio() == -1) {

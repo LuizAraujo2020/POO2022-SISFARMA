@@ -86,5 +86,32 @@ public class DepartamentoDAO {
 		}
 		return -1;
 	}
+	
+	//TODO: Fazer um throw de não encontrado
+	public Integer retrieveIdDepartamentoDeNome(String nome) {
+//		Conexao conexao = new Conexao();
+//		Connection connection = conexao.conectar();
+
+		//TODO: Arrumar o * depois
+		String sql = "SELECT id_departamento, nome FROM departamento";
+		
+		PreparedStatement pstmt;
+		try {
+			pstmt = connection.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery(sql);
+			
+			while(rs.next()){
+
+				if(rs.getString("nome").equals(nome)) {
+					return rs.getInt("id_departamento");
+				}
+			}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }
 

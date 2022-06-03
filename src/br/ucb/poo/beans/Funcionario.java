@@ -4,8 +4,8 @@ import java.sql.Date;
 
 public class Funcionario extends Pessoa {
 	private Integer id_funcionario;
-	private Cargo cargo;
-	private Departamento departamento;
+	private Integer id_cargo;
+	private Integer id_departamento;
 	private Float salario;
 	private Date dt_adimissao;
 	
@@ -15,17 +15,17 @@ public class Funcionario extends Pessoa {
 	public void setId_funcionario(Integer id_funcionario) {
 		this.id_funcionario = id_funcionario;
 	}
-	public Cargo getCargo() {
-		return cargo;
+	public Integer getId_cargo() {
+		return id_cargo;
 	}
-	public void setCargo(Cargo cargo) {
-		this.cargo = cargo;
+	public void setId_cargo(Integer id_cargo) {
+		this.id_cargo = id_cargo;
 	}
-	public Departamento getDepartamento() {
-		return departamento;
+	public Integer getId_departamento() {
+		return id_departamento;
 	}
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
+	public void setId_departamento(Integer id_departamento) {
+		this.id_departamento = id_departamento;
 	}
 	public Float getSalario() {
 		return salario;

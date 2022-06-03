@@ -86,4 +86,31 @@ public class CargoDAO {
 		}
 		return -1;
 	}
+	
+	//TODO: Fazer um throw de não encontrado
+	public Integer retrieveIdCargoDeNome(String nome) {
+//		Conexao conexao = new Conexao();
+//		Connection connection = conexao.conectar();
+
+		//TODO: Arrumar o * depois
+		String sql = "SELECT id_cargo, nome FROM cargo";
+		
+		PreparedStatement pstmt;
+		try {
+			pstmt = connection.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery(sql);
+			
+			while(rs.next()){
+
+				if(rs.getString("nome").equals(nome)) {
+					return rs.getInt("id_cargo");
+				}
+			}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }
