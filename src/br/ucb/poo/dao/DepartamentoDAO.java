@@ -113,5 +113,15 @@ public class DepartamentoDAO {
 		}
 		return -1;
 	}
+	
+	public Departamento retrieveDepartamentoDeId(Integer id) {
+		ArrayList<Departamento> departamentos = retrieveDepartamentos();
+		for(Departamento dep : departamentos) {
+			if(dep.getId_departamento() == id) {
+				return dep;
+			}
+		}
+		return null;
+	}
 }
 

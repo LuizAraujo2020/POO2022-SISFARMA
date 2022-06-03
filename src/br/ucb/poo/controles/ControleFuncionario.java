@@ -6,13 +6,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+import br.ucb.poo.beans.Cargo;
+import br.ucb.poo.beans.Departamento;
 import br.ucb.poo.beans.Endereco;
-import br.ucb.poo.beans.Laboratorio;
-import br.ucb.poo.beans.Medicamento;
+import br.ucb.poo.beans.Funcionario;
 import br.ucb.poo.beans.Telefones;
+import br.ucb.poo.dao.CargoDAO;
+import br.ucb.poo.dao.DepartamentoDAO;
 import br.ucb.poo.dao.EnderecoDAO;
-import br.ucb.poo.dao.LaboratorioDAO;
-import br.ucb.poo.dao.MedicamentoDAO;
+import br.ucb.poo.dao.FuncionarioDAO;
 import br.ucb.poo.dao.TelefonesDAO;
 
 public class ControleFuncionario {
@@ -21,9 +23,12 @@ public class ControleFuncionario {
 	public static void gerenciarFuncionario() {
 
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-		LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
+		
 		EnderecoDAO enderecoDAO = new EnderecoDAO();
 		TelefonesDAO telefonesDAO = new TelefonesDAO();
+		DepartamentoDAO departamentoDAO = new DepartamentoDAO();
+		CargoDAO cargoDAO = new CargoDAO();
+		
 
 		Funcionario funcionario = new Funcionario();
 
@@ -35,7 +40,7 @@ public class ControleFuncionario {
 		//MARK: - MENU PRINCIPAL
 		do {
 			/// Limpar Mem Buffer
-			sc = new Scanner(System.in);
+//			sc = new Scanner(System.in);
 
 			imprimirMenuTelaInicialFuncionario();
 			System.out.println(" ");
@@ -47,12 +52,12 @@ public class ControleFuncionario {
 				
 				funcionario = new Funcionario();
 
-				Laboratorio laboratorio = new Laboratorio();
+				
 				Endereco endereco = new Endereco();
 				Telefones telefones = new Telefones();
-
-				Integer idLaboratorio;
-				String nomeLaboratorio = "";
+				Cargo cargo = new Cargo();
+				Departamento departamento = new Departamento();
+				
 
 				imprimirHeader();	
 
@@ -60,84 +65,19 @@ public class ControleFuncionario {
 
 				System.out.println("\n\n");
 
-				sc = new Scanner(System.in);
+//				sc = new Scanner(System.in);
 
-				System.out.println("Insira o nome do Laboratório: ");
-				nomeLaboratorio = sc.next();
-
-				idLaboratorio = laboratorioDAO.retrieveIdLaboratorioDeNome(nomeLaboratorio);
-
-
-				if(idLaboratorio >= 0) {
-					funcionario.setId_laboratorio(idLaboratorio);
-
-				} else {
-					System.out.println("Laboratório ainda não cadastrado!");
-					System.out.println("Por favor insira: ");
-
-					laboratorio = new Laboratorio();
-
-					// Pega o nome fornecido anteriormente.
-					laboratorio.setNome(nomeLaboratorio);
-
-					sc = new Scanner(System.in);
-					System.out.println("\n# Endereço");
-					System.out.println("Insira o CEP: ");
-					endereco.setCep(sc.nextLine());
-
-
-					sc = new Scanner(System.in);
-
-					System.out.println("Insira o número do lote/casa: ");
-					endereco.setNumero(sc.nextInt());
-
-					sc = new Scanner(System.in);
-
-					System.out.println("\n# Contato");
-					System.out.println("Tel. Celular: ");
-					telefones.setCelular(sc.nextLine());
-
-
-					sc = new Scanner(System.in);
-					System.out.println("Tel. Comercial: ");
-					telefones.setComercial(sc.nextLine());
-
-					telefones.setResidencial("00000-0000");
-
-
-					enderecoDAO.addEndereco(endereco);
-					telefonesDAO.addTelefones(telefones);
-
-					// Conectar os ID do Telefones e do Endereco como o Laboratorio.
-					endereco.setId_endereco(enderecoDAO.retrieveIdEndereco(endereco));
-					telefones.setId_telefones(telefonesDAO.retrieveIdDeTelefones(telefones));
-
-					// Por o Endereco e o Telefones no Laboratorio.
-					laboratorio.setEndereco(endereco);
-					laboratorio.setTelefones(telefones);
-
-					laboratorioDAO.addLaboratorio(laboratorio);
-
-					funcionario.setId_laboratorio(laboratorioDAO.retrieveIdLaboratorioDeNome(laboratorio.getNome()));
-
-				}
-
-
-				// Limpar Buffer
-				sc = new Scanner(System.in);
-				System.out.println("Nome do Funcionario:");
-				funcionario.setNome_funcionario(sc.nextLine());
-
-
-				sc = new Scanner(System.in);
-				System.out.println("Valor do funcionario: R$ ");
-				funcionario.setPreco(sc.nextFloat());
-
+				System.out.println("Insira o nome do Funcionario: ");
+				funcionario.setNome(sc.next());
+				
+				System.out.println("Insira o CPF do Funcionario: ");
+				funcionario.setCpf(sc.nextLine());
+				
 				Integer parseDateContadorDeErros = 0;
 
 				do {
 					sc = new Scanner(System.in);
-					System.out.println("Vencimento (yyyy-MM-dd): ");
+					System.out.println("Nascimento (yyyy-MM-dd): ");
 					String stringDate = sc.nextLine();
 
 					try {
@@ -146,7 +86,7 @@ public class ControleFuncionario {
 						java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 						sqlDate = new java.sql.Date(myDate.getTime());
 
-						funcionario.setDt_vencimento(sqlDate);
+						funcionario.setDt_nascimento(sqlDate);
 
 						parseDateContadorDeErros = 0;
 
@@ -158,10 +98,112 @@ public class ControleFuncionario {
 				}while(parseDateContadorDeErros > 0);
 
 				sc = new Scanner(System.in);
-				System.out.println("Quantidade em estoque: ");
-				funcionario.setQtd_estoque(sc.nextInt());
+				System.out.println("\n# Endereço");
+				System.out.println("Insira o CEP: ");
+				endereco.setCep(sc.nextLine());
+
+
+				sc = new Scanner(System.in);
+
+				System.out.println("Insira o número do lote/casa: ");
+				endereco.setNumero(sc.nextInt());
+
+				sc = new Scanner(System.in);
+
+				System.out.println("\n# Contato");
+				System.out.println("Tel. Celular: ");
+				telefones.setCelular(sc.nextLine());
+
+
+				sc = new Scanner(System.in);
+				System.out.println("Tel. Comercial: ");
+				telefones.setComercial(sc.nextLine());
+
+				telefones.setResidencial("00000-0000");
+
+
+				enderecoDAO.addEndereco(endereco);
+				telefonesDAO.addTelefones(telefones);
+
+				// Conectar os ID do Telefones e do Endereco como o Laboratorio.
+				endereco.setId_endereco(enderecoDAO.retrieveIdEndereco(endereco));
+				telefones.setId_telefones(telefonesDAO.retrieveIdDeTelefones(telefones));
+
+				funcionario.setEndereco(endereco);
+				funcionario.setTelefones(telefones);
 				
-				funcionarioDAO.addFuncionario(funcionario, nomeLaboratorio);
+				System.out.println("Insira o Departamento do Funcionario: ");
+				departamento.setNome(sc.nextLine());
+				
+				System.out.println("Insira o Cargo do Funcionario: ");
+				cargo.setNome(sc.nextLine());
+				
+				
+				
+				cargo.setId_cargo(cargoDAO.retrieveIdCargoDeNome(cargo.getNome()));
+				departamento.setId_departamento(departamentoDAO.retrieveIdDepartamentoDeNome(departamento.getNome()));
+				
+				funcionario.setId_cargo(cargo.getId_cargo());
+				funcionario.setId_departamento(departamento.getId_departamento());
+				
+				System.out.println("Insira o Salario do Funcionario: ");
+				funcionario.setSalario(sc.nextFloat());
+				
+				System.out.println("Insira a Data de admissao do Funcionario: ");
+				
+				parseDateContadorDeErros = 0;
+
+				do {
+					sc = new Scanner(System.in);
+					System.out.println("Admissao (yyyy-MM-dd): ");
+					String stringDate = sc.nextLine();
+
+					try {
+						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+						Date myDate = formatter.parse(stringDate);
+						java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+						sqlDate = new java.sql.Date(myDate.getTime());
+
+						funcionario.setDt_adimissao(sqlDate);
+
+						parseDateContadorDeErros = 0;
+
+					} catch (ParseException e1) {
+						//						e1.printStackTrace();
+						parseDateContadorDeErros += 1;
+						System.out.println("Data inválida!");
+					}
+				}while(parseDateContadorDeErros > 0);
+				
+				
+//				private String cpf;
+//				private String nome;
+//				private Date dt_nascimento;
+//				private Endereco endereco;
+//				private Telefones telefones;
+//				
+//				private Integer id_funcionario;
+//				private Integer id_cargo;
+//				private Integer id_departamento;
+//				private Float salario;
+//				private Date dt_adimissao;
+
+
+
+				if(funcionario.getId_cargo() == -1) {
+					cargoDAO.addCargo(cargo);
+				}
+
+				if(funcionario.getId_departamento() == -1) {
+					departamentoDAO.addDepartamento(departamento);
+				}
+				
+				funcionario.setId_cargo(cargoDAO.retrieveIdCargoDeNome(cargo.getNome()));
+				funcionario.setId_departamento(departamentoDAO.retrieveIdDepartamentoDeNome(departamento.getNome()));
+
+				
+				
+				funcionarioDAO.addFuncionario(funcionario);
 				break;
 
 				//MARK: - TELA LISTAGEM
@@ -176,8 +218,8 @@ public class ControleFuncionario {
 					System.out.println("ID - Nome");
 
 					System.out.println("--------------------------");
-					for(Funcionario med : funcionarioDAO.retrieveFuncionario() ){
-						System.out.println(med.getId_funcionario() + " - " + med.getNome_funcionario());
+					for(Funcionario func : funcionarioDAO.retrieveFuncionario() ){
+						System.out.println(func.getId_funcionario() + " - " + func.getNome());
 					}
 
 					System.out.println("\n");
@@ -218,7 +260,10 @@ public class ControleFuncionario {
 						idParaPesquisa = sc.nextInt();
 
 						funcionario = funcionarioDAO.retrieveFuncionarioFromId(idParaPesquisa);
-						laboratorio = laboratorioDAO.retrieveLaboratorioDeID(funcionario.getId_laboratorio());
+						endereco = enderecoDAO.retrieveEnderecoDeId(funcionario.getEndereco().getId_endereco());
+						telefones = telefonesDAO.retrieveTelefonesDeId(funcionario.getTelefones().getId_telefones());
+						cargo = cargoDAO.retrieveCargoDeId(funcionario.getId_cargo());
+						departamento = departamentoDAO.retrieveDepartamentoDeId(funcionario.getId_departamento());
 
 						imprimirHeader();	
 
@@ -228,11 +273,9 @@ public class ControleFuncionario {
 						}
 						System.out.println("DETALHES DO FUNCIONARIO ID: " + funcionario.getId_funcionario());
 						System.out.println("\n\n");
-						System.out.println("Nome: " + funcionario.getNome_funcionario());
-						System.out.println("Laboratório: " + laboratorio.getId_laboratorio() + " - " + laboratorio.getNome());
-						System.out.println("Preço: R$ " + funcionario.getPreco());
-						System.out.println("Estoque: " + funcionario.getQtd_estoque());
-
+						System.out.println("Nome: " + funcionario.getNome());
+						System.out.println("Departamento: " + departamento.getNome());
+						System.out.println("Cargo: " + cargo.getNome());
 						System.out.println("\nEscolha uma opção:");
 						System.out.println("(V) Voltar para tela principal");
 						System.out.println("(L) Voltar para listagem de funcionarios");
@@ -275,53 +318,53 @@ public class ControleFuncionario {
 						funcionarioNovo = funcionarioAtual;
 
 
-
-						/// Limpar Mem Buffer
-						sc = new Scanner(System.in);
-
-						System.out.println("Nome atual: " + funcionarioAtual.getNome_funcionario());
-						funcionarioNovo.setNome_funcionario(sc.nextLine());
-
-						System.out.println("Preço atual: " + funcionarioAtual.getPreco());
-						funcionarioNovo.setPreco(sc.nextFloat());
-
-
-						parseDateContadorDeErros = 0;
-
-						do {
-							sc = new Scanner(System.in);
-							System.out.println("Vencimento (yyyy-MM-dd): ");
-							String stringDate = sc.nextLine();
-
-							try {
-								DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-								Date myDate = formatter.parse(stringDate);
-								java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-								sqlDate = new java.sql.Date(myDate.getTime());
-
-								funcionarioNovo.setDt_vencimento(sqlDate);
-
-								parseDateContadorDeErros = 0;
-
-							} catch (ParseException e1) {
-								//    								e1.printStackTrace();
-								parseDateContadorDeErros += 1;
-								System.out.println("Data invÃ¡lida!");
-							}
-						}while(parseDateContadorDeErros > 0);
-
-
-						System.out.println("Quantidade em estoque atual: " + funcionarioAtual.getQtd_estoque());
-						funcionarioNovo.setQtd_estoque(sc.nextInt());
-
-
-
-						System.out.println("Deseja confirmar a alteracao?");
-						System.out.println("Digite 's' para SALVAR:");
-						String salvar = sc.next();
-						if(salvar.equals("s") || salvar.equals("S")) {
-							funcionarioDAO.updateFuncionario(funcionarioNovo, funcionarioAtual.getId_funcionario());
-						}
+//
+//						/// Limpar Mem Buffer
+//						sc = new Scanner(System.in);
+//
+//						System.out.println("Nome atual: " + funcionarioAtual.getNome_funcionario());
+//						funcionarioNovo.setNome_funcionario(sc.nextLine());
+//
+//						System.out.println("Preço atual: " + funcionarioAtual.getPreco());
+//						funcionarioNovo.setPreco(sc.nextFloat());
+//
+//
+//						parseDateContadorDeErros = 0;
+//
+//						do {
+//							sc = new Scanner(System.in);
+//							System.out.println("Vencimento (yyyy-MM-dd): ");
+//							String stringDate = sc.nextLine();
+//
+//							try {
+//								DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//								Date myDate = formatter.parse(stringDate);
+//								java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
+//								sqlDate = new java.sql.Date(myDate.getTime());
+//
+//								funcionarioNovo.setDt_vencimento(sqlDate);
+//
+//								parseDateContadorDeErros = 0;
+//
+//							} catch (ParseException e1) {
+//								//    								e1.printStackTrace();
+//								parseDateContadorDeErros += 1;
+//								System.out.println("Data invÃ¡lida!");
+//							}
+//						}while(parseDateContadorDeErros > 0);
+//
+//
+//						System.out.println("Quantidade em estoque atual: " + funcionarioAtual.getQtd_estoque());
+//						funcionarioNovo.setQtd_estoque(sc.nextInt());
+//
+//
+//
+//						System.out.println("Deseja confirmar a alteracao?");
+//						System.out.println("Digite 's' para SALVAR:");
+//						String salvar = sc.next();
+//						if(salvar.equals("s") || salvar.equals("S")) {
+//							funcionarioDAO.updateFuncionario(funcionarioNovo, funcionarioAtual.getId_funcionario());
+//						}
 
 						break;
 

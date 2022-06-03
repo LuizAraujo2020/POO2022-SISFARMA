@@ -21,3 +21,7 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+src/.DS_Store
+src/br/.DS_Store
+src/br/ucb/.DS_Store
+src/br/ucb/poo/.DS_Store

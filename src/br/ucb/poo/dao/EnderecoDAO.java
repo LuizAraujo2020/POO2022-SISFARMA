@@ -87,4 +87,14 @@ public class EnderecoDAO {
 		}
 		return -1;
 	}
+	
+	public Endereco retrieveEnderecoDeId(Integer id) {
+		ArrayList<Endereco> enderecos = retrieveEnderecos();
+		for(Endereco end : enderecos) {
+			if(end.getId_endereco() == id) {
+				return end;
+			}	
+		}
+		return null;
+	}
 }

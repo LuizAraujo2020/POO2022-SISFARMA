@@ -113,4 +113,14 @@ public class CargoDAO {
 		}
 		return -1;
 	}
+	
+	public Cargo retrieveCargoDeId(Integer id) {
+		ArrayList<Cargo> cargos = retrieveCargos();
+		for(Cargo c : cargos) {
+			if(c.getId_cargo() == id) {
+				return c;
+			}
+		}
+		return null;
+	}
 }
