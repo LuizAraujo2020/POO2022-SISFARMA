@@ -1,6 +1,7 @@
 package br.ucb.poo.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,48 +20,53 @@ public class FuncionarioDAO {
 
 	public void addFuncionario(Funcionario funcionario){
 		try {
-			if(funcionario.getId_cargo() == -1) {
-				
-			}
-
-			if(funcionario.getId_departamento() == -1) {
-				
-			}
-
-			// Lab não encontrado...
-			while(laboratorio.getId_laboratorio() == -1) {
-
-		        Scanner sc = new Scanner(System.in);
-		        String opcaoMenuCriarLaboratorio = "";
-		        
-				System.out.println("Laboratorio não cadastrado!");
-				System.out.println("L) Listar todos laboratórios;");
-				System.out.println("I) Cadastrar novo laboratório;");
-				opcaoMenuCriarLaboratorio = sc.next();
-				
-				switch(opcaoMenuCriarLaboratorio) {
-				case "L":
-				case "l":
-					LaboratorioView laboratorioView = new LaboratorioView();
-					laboratorioView.listarTodosLaboratorios();
-
-					System.out.println("Encontrou o Laboratorio?");
-					
-				case "I":
-				case "i":
-					
-					break;
-				}
+//			if(funcionario.getId_cargo() == -1) {
+//				
+//			}
+//
+//			if(funcionario.getId_departamento() == -1) {
+//				
+//			}
+//
+//			// Lab não encontrado...
+//			while(laboratorio.getId_laboratorio() == -1) {
+//
+//		        Scanner sc = new Scanner(System.in);
+//		        String opcaoMenuCriarLaboratorio = "";
+//		        
+//				System.out.println("Laboratorio não cadastrado!");
+//				System.out.println("L) Listar todos laboratórios;");
+//				System.out.println("I) Cadastrar novo laboratório;");
+//				opcaoMenuCriarLaboratorio = sc.next();
+//				
+//				switch(opcaoMenuCriarLaboratorio) {
+//				case "L":
+//				case "l":
+//					LaboratorioView laboratorioView = new LaboratorioView();
+//					laboratorioView.listarTodosLaboratorios();
+//
+//					System.out.println("Encontrou o Laboratorio?");
+//					
+//				case "I":
+//				case "i":
+//					
+//					break;
+//				}
 //				CRUD -> C
-			}
-			
-			String sql = "INSERT INTO funcionario (id_laboratorio, preco, dt_vencimento, nome_funcionario, qtd_estoque) VALUES (?,?,?,?,?)";
+//			}
+//
+//			private Integer id_funcionario;
+//			private Integer id_cargo;
+//			private Integer id_departamento;
+//			private Float salario;
+//			private Date dt_adimissao;
+			String sql = "INSERT INTO funcionario (id_funcionario, id_cargo, id_departamento, salario, dt_adimissao) VALUES (?,?,?,?,?)";
 			PreparedStatement pstmt = connection.prepareStatement(sql);
-			pstmt.setInt(1, laboratorio.getId_laboratorio());
-			pstmt.setFloat(2, funcionario.getPreco());
-			pstmt.setDate(3, funcionario.getDt_vencimento());
-			pstmt.setString(4, funcionario.getNome_funcionario());
-			pstmt.setInt(5, funcionario.getQtd_estoque());
+			pstmt.setInt(1, funcionario.getId_funcionario());
+			pstmt.setInt(2, funcionario.getId_cargo());
+			pstmt.setInt(3, funcionario.getId_departamento());
+			pstmt.setFloat(4, funcionario.getSalario());
+			pstmt.setDate(5, funcionario.getDt_adimissao());
 			pstmt.execute();
 			pstmt.close();
 		} catch (SQLException e) {
@@ -131,12 +137,17 @@ public class FuncionarioDAO {
 			while(rs.next()){
 				Funcionario funcionario = new Funcionario();
 
+//				private Integer id_funcionario;
+//				private Integer id_cargo;
+//				private Integer id_departamento;
+//				private Float salario;
+//				private Date dt_adimissao;
 				funcionario.setId_funcionario(rs.getInt("id_funcionario"));
-				funcionario.setId_laboratorio(rs.getInt("id_laboratorio"));
-				funcionario.setPreco(rs.getFloat("preco"));
-				funcionario.setDt_vencimento(rs.getDate("dt_vencimento"));
-				funcionario.setNome_funcionario(rs.getString("nome_funcionario"));
-				funcionario.setQtd_estoque(rs.getInt("qtd_estoque"));
+				funcionario.setId_cargo(rs.getInt("id_cargo"));
+				funcionario.setId_departamento(rs.getInt("id_departamento"));
+				funcionario.setCpf(rs.getString("cpf"));
+				funcionario.setSalario(rs.getFloat("salario"));
+				funcionario.setDt_adimissao(rs.getDate("dt_adimissao"));
 
 				funcionarios.add(funcionario);
 			}

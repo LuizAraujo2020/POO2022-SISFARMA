@@ -18,11 +18,10 @@ public class Executora {
 			imprimirHeader();
 			imprimirMenuTelaInicial();
 			
-			Scanner sc = new Scanner(System.in);
-			opcaoMenuPrincipal = sc.next().toUpperCase();
+			Scanner scanner = new Scanner(System.in);
+			opcaoMenuPrincipal = scanner.next().toUpperCase();
 			System.out.println("");
 
-			sc.close();
 			
 			switch(opcaoMenuPrincipal) {
 				case "M":
