@@ -6,6 +6,7 @@ public class Funcionario extends Pessoa {
 	private Integer id_funcionario;
 	private Integer id_cargo;
 	private Integer id_departamento;
+	private Integer id_pessoa;
 	private Float salario;
 	private Date dt_adimissao;
 	
@@ -38,5 +39,11 @@ public class Funcionario extends Pessoa {
 	}
 	public void setDt_adimissao(Date dt_adimissao) {
 		this.dt_adimissao = dt_adimissao;
+	}
+	public Integer getId_pessoa() {
+		return id_pessoa;
+	}
+	public void setId_pessoa(Integer id_pessoa) {
+		this.id_pessoa = id_pessoa;
 	}
 }

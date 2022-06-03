@@ -27,22 +27,24 @@ public class PessoaDAO {
 //		Connection connection = conexao.conectar();
 		try {
 			String sql = "INSERT INTO pessoa (id_endereco, id_telefones, cpf, nome, dt_nascimento) VALUES (?,?,?,?,?)";
+			
 			PreparedStatement pstmt = connection.prepareStatement(sql);
 			
 			pstmt.setInt(1, pessoa.getId_endereco());
-			pstmt.setInt(2, pessoa.getId_endereco());
+			pstmt.setInt(2, pessoa.getId_telefones());
 			pstmt.setString(3, pessoa.getCpf());
 			pstmt.setString(4, pessoa.getNome());
 			pstmt.setDate(5, pessoa.getDt_nascimento());
 			
 			pstmt.execute();
 			pstmt.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public ArrayList<Pessoa> retrievePessoas(){
+	public ArrayList<Pessoa> retrievePessoas() {
 
 //		Conexao conexao = new Conexao();
 //		Connection connection = conexao.conectar();
@@ -134,5 +136,26 @@ public class PessoaDAO {
 		}
 		return null;
 	}
+	
+	public Pessoa retrievePessoaDeCpf(String cpf) {
+		ArrayList<Pessoa> pessoas = retrievePessoas();
+		for(Pessoa dep : pessoas) {
+			if(dep.getCpf().equals(cpf)) {
+				return dep;
+			}
+		}
+		return null;
+	}
+	
+	public Integer retrieveIdPessoaDeCpf(String cpf) {
+		ArrayList<Pessoa> pessoas = retrievePessoas();
+		for(Pessoa dep : pessoas) {
+			if(dep.getCpf().equals(cpf)) {
+				return dep.getId_pessoa();
+			}
+		}
+		return null;
+	}
+	
 }
 
