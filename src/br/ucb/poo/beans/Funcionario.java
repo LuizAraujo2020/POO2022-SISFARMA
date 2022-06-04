@@ -2,31 +2,64 @@ package br.ucb.poo.beans;
 
 import java.sql.Date;
 
-import br.ucb.poo.utils.Pessoa;
-
-public class Funcionario extends Pessoa {
+public class Funcionario {
 	private Integer id_funcionario;
-	private Integer cargo;
-	private Integer departamento;
+	private String endereco;
+	private String telefone;
+	private String cpf;
+	private String nome;
+	private Date dt_nascimento;
+	private String cargo;
+	private String departamento;
 	private Float salario;
-	private Date dt_adimissao;
-	s
+	private Date dt_admissao;
+	
+	public String getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+	public String getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public Date getDt_nascimento() {
+		return dt_nascimento;
+	}
+	public void setDt_nascimento(Date dt_nascimento) {
+		this.dt_nascimento = dt_nascimento;
+	}
 	public Integer getId_funcionario() {
 		return id_funcionario;
 	}
 	public void setId_funcionario(Integer id_funcionario) {
 		this.id_funcionario = id_funcionario;
 	}
-	public Integer getCargo() {
+	public String getCargo() {
 		return cargo;
 	}
-	public void setCargo(Integer cargo) {
+	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
-	public Integer getDepartamento() {
+	public String getDepartamento() {
 		return departamento;
 	}
-	public void setDepartamento(Integer departamento) {
+	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
 	public Float getSalario() {
@@ -35,10 +68,10 @@ public class Funcionario extends Pessoa {
 	public void setSalario(Float salario) {
 		this.salario = salario;
 	}
-	public Date getDt_adimissao() {
-		return dt_adimissao;
+	public Date getDt_admissao() {
+		return dt_admissao;
 	}
-	public void setDt_adimissao(Date dt_adimissao) {
-		this.dt_adimissao = dt_adimissao;
+	public void setDt_admissao(Date dt_admissao) {
+		this.dt_admissao = dt_admissao;
 	}
 }

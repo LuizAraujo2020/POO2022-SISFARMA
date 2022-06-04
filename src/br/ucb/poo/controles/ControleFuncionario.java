@@ -19,7 +19,6 @@ import br.ucb.poo.utils.TelefonesDAO;
 
 public class ControleFuncionario {
 
-
 	public static void gerenciarFuncionario() {
 
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
