@@ -52,7 +52,7 @@ public class FuncionarioDAO {
 //		private Float salario;
 //		private Date dt_admissao;
 
-		String sql = "SELECT (id_funcionario, endereco, telefone, salario, cpf, nome, dt_nascimento, cargo, departamento, dt_admissao) FROM funcionario";
+		String sql = "SELECT id_funcionario, endereco, telefone, salario, cpf, nome, dt_nascimento, cargo, departamento, dt_admissao FROM funcionario";
 		
 		ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
 		PreparedStatement pstmt;

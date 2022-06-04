@@ -11,12 +11,11 @@ import br.ucb.poo.dao.FuncionarioDAO;
 
 public class ControleFuncionario {
 
-	public static void gerenciarFuncionario() {
+	public void gerenciarFuncionario() {
+		Leitora leitora = new Leitora();
 
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 		Funcionario funcionario = new Funcionario();
-
-		Scanner sc = new Scanner(System.in);
 
 		String opcaoMenuInicial = "";
 		String opcaoMenuListagem = "";
@@ -25,9 +24,8 @@ public class ControleFuncionario {
 		do {
 			
 			imprimirMenuTelaInicialFuncionario();
-			System.out.println(" ");
 			
-			opcaoMenuInicial = sc.nextLine().toString();
+			opcaoMenuInicial = leitora.leTexto(" ").toUpperCase();
 
 			//MARK: - TELA INSERIR NOVO FUNCIONARIO
 			switch(opcaoMenuInicial) {
@@ -42,76 +40,20 @@ public class ControleFuncionario {
 
 				System.out.println("\n\n");
 
+				funcionario.setNome(leitora.leTexto("Insira o nome do Funcionario: "));
+				funcionario.setCpf(leitora.leTexto("Insira o CPF do Funcionario: "));
+				funcionario.setDt_nascimento(leitora.leDate("Nascimento"));
 
-				System.out.println("Insira o nome do Funcionario: ");
-				funcionario.setNome(sc.nextLine().toString());
+				funcionario.setEndereco(leitora.leTexto("\nInsira o Endereço completo: "));
+				funcionario.setTelefone(leitora.leTexto("\nInsira um Telefone para contato: "));
+
+				funcionario.setDepartamento(leitora.leTexto("Insira o Departamento do Funcionario: "));
+				funcionario.setCargo(leitora.leTexto("Insira o Cargo do Funcionario: "));
 				
-				System.out.println("Insira o CPF do Funcionario: ");
-				funcionario.setCpf(sc.nextLine().toString());
+				funcionario.setSalario(leitora.leFloat("Insira o Salario: "));
 				
-				Integer parseDateContadorDeErros = 0;
+				funcionario.setDt_admissao(leitora.leDate("Insira a Data de admissao do Funcionario: "));
 
-				do {
-					System.out.println("Nascimento (yyyy-MM-dd): ");
-					String stringDate = sc.nextLine().toString();
-
-					try {
-						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-						Date myDate = formatter.parse(stringDate);
-						java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-						sqlDate = new java.sql.Date(myDate.getTime());
-
-						funcionario.setDt_nascimento(sqlDate);
-
-						parseDateContadorDeErros = 0;
-
-					} catch (ParseException e1) {
-						//						e1.printStackTrace();
-						parseDateContadorDeErros += 1;
-						System.out.println("Data inválida!");
-					}
-				}while(parseDateContadorDeErros > 0);
-
-				System.out.println("\nEndereço");
-				System.out.println("Insira o Endereço completo: ");
-				funcionario.setEndereco(sc.nextLine().toString());
-
-				System.out.println("\nInsira um Telefone para contato: ");
-				funcionario.setTelefone(sc.nextLine().toString());
-				
-				System.out.println("Insira o Departamento do Funcionario: ");
-				funcionario.setDepartamento(sc.nextLine().toString());
-				
-				System.out.println("Insira o Cargo do Funcionario: ");
-				funcionario.setCargo(sc.nextLine().toString());
-				
-				System.out.println("Insira o Salario: ");
-				funcionario.setSalario(Float.parseFloat(sc.nextLine()));
-				
-				System.out.println("Insira a Data de admissao do Funcionario: ");
-				parseDateContadorDeErros = 0;
-
-				do {
-					 
-					System.out.println("Admissao (dd-MM-yyyy): ");
-					String stringDate = sc.nextLine().toString();
-
-					try {
-						DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-						Date myDate = formatter.parse(stringDate);
-						java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-						sqlDate = new java.sql.Date(myDate.getTime());
-
-						funcionario.setDt_admissao(sqlDate);
-
-						parseDateContadorDeErros = 0;
-
-					} catch (ParseException e1) {
-						//e1.printStackTrace();
-						parseDateContadorDeErros += 1;
-						System.out.println("Data inválida!");
-					}
-				}while(parseDateContadorDeErros > 0);
 				
 				funcionarioDAO.addFuncionario(funcionario);
 				break;
@@ -140,7 +82,7 @@ public class ControleFuncionario {
 					System.out.println("(X) Apagar funcionario - ID");
 
 
-					opcaoMenuListagem = sc.nextLine().toString().toUpperCase();
+					opcaoMenuListagem = leitora.leTexto("").toUpperCase();
 
 					switch(opcaoMenuListagem) {
 					case "V":
@@ -157,16 +99,18 @@ public class ControleFuncionario {
 						System.out.println("\n\n");
 
 						do {
-							System.out.println("Informe o ID conforme apresentado na tela anterior: _");
-							idParaPesquisa = Integer.parseInt(sc.nextLine());
+							idParaPesquisa = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
 	
 							funcionario = funcionarioDAO.retrieveFuncionarioFromId(idParaPesquisa);
-	
-							imprimirHeader();	
-
-							System.out.println("FUNCIONARIO NAO ENCONTRADO!");
+							
+							if(funcionario.getId_funcionario() == null) {
+								System.out.println("FUNCIONARIO NAO ENCONTRADO!");
+							}
 							
 						}while(funcionario.getId_funcionario() == null);
+
+						
+						imprimirHeader();	
 						
 						if(funcionario.getId_funcionario() != null) {
 							System.out.println("DETALHES DO FUNCIONARIO ID: " + funcionario.getId_funcionario());
@@ -179,7 +123,7 @@ public class ControleFuncionario {
 							System.out.println("(L) Voltar para listagem de funcionarios");
 						}
 
-						opcaoMenuDetalheFuncionario = sc.nextLine().toString().toUpperCase();
+						opcaoMenuDetalheFuncionario = leitora.leTexto("").toUpperCase();
 
 						if(opcaoMenuDetalheFuncionario.equals("V")) {
 							opcaoMenuListagem = "V";
@@ -195,13 +139,10 @@ public class ControleFuncionario {
 
 						System.out.println("ATUALIZAR FUNCIONARIO");
 						System.out.println("\n\n");
-						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
 
-
-						idParaPesquisa = Integer.parseInt(sc.nextLine());
+						idParaPesquisa = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
 
 						System.out.println("Editar");
-
 
 						Funcionario funcionarioAtual = new Funcionario();
 						Funcionario funcionarioNovo = new Funcionario();
@@ -215,105 +156,79 @@ public class ControleFuncionario {
 						//Menu para escolher o que alterar
 						String opcaoMenuAtualizarFuncionario = "X";
 						do {
-							opcaoMenuAtualizarFuncionario = sc.nextLine().toString().toUpperCase();
+
+							System.out.println("Escolha uma opção:");
+							System.out.println("(EN) Atualizar Endereco");
+							System.out.println("(TE) Atualizar Telefone");
+							System.out.println("(CP) Atualizar CPF");
+							System.out.println("(NO) Atualizar Nome");
+							System.out.println("(DN) Atualizar Data de Nascimento");
+							System.out.println("(CA) Atualizar Cargo");
+							System.out.println("(DE) Atualizar Departamento");
+							System.out.println("(SA) Atualizar Salario");
+							System.out.println("(DA) Atualizar Data de Admissao");
+							
+							
+							opcaoMenuAtualizarFuncionario = leitora.leTexto("OPCAO: ").toUpperCase();
 							
 							switch(opcaoMenuAtualizarFuncionario) {
 							case "EN":
-								funcionarioNovo.setEndereco(sc.nextLine().toString());
+								System.out.println("Endereco atual:\n" + funcionarioAtual.getEndereco() + "\n novo:");
+								funcionarioNovo.setEndereco(leitora.leTexto());
 								break;
 
 							case "TE":
-								funcionarioNovo.setTelefone(sc.nextLine().toString());
+								System.out.println("Telefone atual:\n" + funcionarioAtual.getTelefone() + "\nTelefone novo:");
+								funcionarioNovo.setTelefone(leitora.leTexto());
 								break;
 
 							case "CP":
-								funcionarioNovo.setCpf(sc.nextLine().toString());
+								System.out.println("CPF atual:\n" + funcionarioAtual.getCpf() + "\nCPF novo:");
+								funcionarioNovo.setCpf(leitora.leTexto());
 								break;
 
 							case "NO":
-								funcionarioNovo.setNome(sc.nextLine().toString());
+								System.out.println("Nome atual:\n" + funcionarioAtual.getNome() + "\nNome novo:");
+								funcionarioNovo.setNome(leitora.leTexto());
 								break;
 
 							case "DN":
-								parseDateContadorDeErros = 0;
-
-								do {
-									 
-									System.out.println("Data de nascimento (dd-MM-yyyy): ");
-									String stringDate = sc.nextLine().toString();
-
-									try {
-										DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-										Date myDate = formatter.parse(stringDate);
-										java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-										sqlDate = new java.sql.Date(myDate.getTime());
-
-										funcionarioNovo.setDt_nascimento(sqlDate);
-
-										parseDateContadorDeErros = 0;
-
-									} catch (ParseException e1) {
-										//e1.printStackTrace();
-										parseDateContadorDeErros += 1;
-										System.out.println("Data inválida!");
-									}
-								}while(parseDateContadorDeErros > 0);
+								System.out.println("Data de Nascimento atual:\n" + funcionarioAtual.getDt_nascimento() + "\nData de Nascimento nova:");
+								funcionarioNovo.setDt_nascimento(leitora.leDate());
 								
 								break;
 
 							case "CA":
-								funcionarioNovo.setCargo(sc.nextLine().toString());
+								System.out.println("Cargo atual:\n" + funcionarioAtual.getCargo() + "\nCargo novo:");
+								funcionarioNovo.setCargo(leitora.leTexto());
 								break;
 
 							case "DE":
-								funcionarioNovo.setDepartamento(sc.nextLine().toString());
+								System.out.println("Departamento atual:\n" + funcionarioAtual.getDepartamento() + "\nDepartamento novo:");
+								funcionarioNovo.setDepartamento(leitora.leTexto());
 								break;
 
 							case "SA":
-								funcionarioNovo.setSalario(Float.parseFloat(sc.nextLine()));
+								System.out.println("Salario atual:\n" + funcionarioAtual.getSalario() + "\nSalario novo:");
+								funcionarioNovo.setSalario(leitora.leFloat());
 								break;
 
 							case "DA":
-								parseDateContadorDeErros = 0;
-
-								do {
-									 
-									System.out.println("Admissao (dd-MM-yyyy): ");
-									String stringDate = sc.nextLine().toString();
-
-									try {
-										DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-										Date myDate = formatter.parse(stringDate);
-										java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-										sqlDate = new java.sql.Date(myDate.getTime());
-
-										funcionarioNovo.setDt_admissao(sqlDate);
-
-										parseDateContadorDeErros = 0;
-
-									} catch (ParseException e1) {
-										//e1.printStackTrace();
-										parseDateContadorDeErros += 1;
-										System.out.println("Data inválida!");
-									}
-								}while(parseDateContadorDeErros > 0);
+								System.out.println("Data de Admissao atual:\n" + funcionarioAtual.getDt_admissao() + "\nData de Admissao novo:");
+								funcionarioNovo.setDt_admissao(leitora.leDate());
 								break;
-
-								
 							}
 						} while(!opcaoMenuAtualizarFuncionario.equals("X"));
 
 						break;
 
-					case "X":
+					case "D":
 
 						imprimirHeader();	
 
-						System.out.println("APAGAR FUNCIONARIO");
+						System.out.println("DELETAR FUNCIONARIO");
 						System.out.println("\n\n");
-						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
-
-						funcionarioDAO.deletarFuncionario(Integer.parseInt(sc.nextLine()));
+						funcionarioDAO.deletarFuncionario(leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _"));
 
 						break;
 
@@ -329,12 +244,11 @@ public class ControleFuncionario {
 
 		} while((opcaoMenuInicial.equalsIgnoreCase("I")) || (opcaoMenuInicial.equalsIgnoreCase("L")));
 
-		sc.close();
 		imprimirBottom();
 	}
 
 
-	static public void imprimirHeader() {
+	public void imprimirHeader() {
 		for (int i = 0; i < 50; ++i) System.out.println();
 
 		System.out.println("====================================================================");
@@ -344,13 +258,14 @@ public class ControleFuncionario {
 	}
 
 
-	static public void imprimirBottom() {
+	public void imprimirBottom() {
 		System.out.println("\n\n");
 		System.out.println("====================================================================");
 		System.out.println("\n\n\n\n");
 	}
 
-	static public void imprimirMenuTelaInicialFuncionario() {
+
+	public void imprimirMenuTelaInicialFuncionario() {
 
 		imprimirHeader();	
 

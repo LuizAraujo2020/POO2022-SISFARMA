@@ -5,7 +5,7 @@ import br.ucb.poo.dao.MedicamentoDAO;
 
 public class ControleMedicamento {
 
-	public static void gerenciarMedicamento() {
+	public void gerenciarMedicamento() {
 		Leitora leitora = new Leitora();
 
 		MedicamentoDAO medicamentoDAO = new MedicamentoDAO();
@@ -38,7 +38,6 @@ public class ControleMedicamento {
 
 
 				medicamento.setDt_vencimento(leitora.leDate("Vencimento (dd-MM-yyyy): "));
-
 
 
 				System.out.println("");
@@ -189,7 +188,8 @@ public class ControleMedicamento {
 	}
 
 
-	static public void imprimirHeader() {
+
+	public void imprimirHeader() {
 		for (int i = 0; i < 50; ++i) System.out.println();
 
 		System.out.println("====================================================================");
@@ -199,13 +199,14 @@ public class ControleMedicamento {
 	}
 
 
-	static public void imprimirBottom() {
+	public void imprimirBottom() {
 		System.out.println("\n\n");
 		System.out.println("====================================================================");
 		System.out.println("\n\n\n\n");
 	}
 
-	static public void imprimirMenuTelaInicialMedicamento() {
+
+	public void imprimirMenuTelaInicialMedicamento() {
 
 		imprimirHeader();	
 

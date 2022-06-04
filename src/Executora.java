@@ -7,8 +7,8 @@ import br.ucb.poo.controles.ControleFuncionario;
 import br.ucb.poo.controles.ControleMedicamento;
 
 public class Executora {
-	static ControleMedicamento controleMedicamento = new ControleMedicamento();
-	static ControleFuncionario controleFuncionario = new ControleFuncionario();
+	static ControleMedicamento controleMedicamento;
+	static ControleFuncionario controleFuncionario;
 	
 	public static void main(String args[]) {
 		String opcaoMenuPrincipal = "A";
@@ -25,14 +25,17 @@ public class Executora {
 			
 			switch(opcaoMenuPrincipal) {
 				case "M":
-					ControleMedicamento.gerenciarMedicamento();
+					controleMedicamento = new ControleMedicamento();
+					controleMedicamento.gerenciarMedicamento();
 					break;
 	
 				case "F":
-					ControleFuncionario.gerenciarFuncionario();
+					controleFuncionario = new ControleFuncionario();
+					controleFuncionario.gerenciarFuncionario();
 					break;
 			}
-			
+			controleFuncionario = null;
+			controleMedicamento = null;
 		}while(!opcaoMenuPrincipal.equals("X"));
 	}
 	
