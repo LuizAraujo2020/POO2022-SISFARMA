@@ -1,7 +1,6 @@
 package br.ucb.poo.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +9,6 @@ import java.util.Scanner;
 
 import br.ucb.poo.beans.Funcionario;
 import br.ucb.poo.factory.Conexao;
-import br.ucb.poo.utils.Endereco;
-import br.ucb.poo.utils.Laboratorio;
-import br.ucb.poo.utils.PessoaDAO;
-import br.ucb.poo.utils.Telefones;
-import br.ucb.poo.views.LaboratorioView;
 
 public class FuncionarioDAO {
 
@@ -126,19 +120,13 @@ public class FuncionarioDAO {
 			preparedStmt.setString(7, funcionarioNovo.getDepartamento());
 			preparedStmt.setFloat(8, funcionarioNovo.getSalario());
 			preparedStmt.setDate(9, funcionarioNovo.getDt_admissao());
-			
-//            preparedStmt.setString(, funcionarioNovo.getSalario());
-//            preparedStmt.setDate(2, funcionarioNovo.getDt_admissao());
-//            preparedStmt.setInt(3, funcionarioNovo.getId_funcionario());
-            
-            
             
             preparedStmt.executeUpdate();  
 			
-
              // execute the java preparedstatement
              preparedStmt.executeUpdate();  
              preparedStmt.close();
+             
         } catch(SQLException e) {
             e.printStackTrace();
         } catch (Exception ex) {
@@ -155,28 +143,28 @@ public class FuncionarioDAO {
 		System.out.println("--------------------------");
 		System.out.println(funcionario.getId_funcionario() + " - " + funcionario.getNome());
 		
-		
 		try {
 
-	        Scanner sc = new Scanner(System.in);
-                
-            System.out.println("Deseja deletar esse funcionario?");
-            System.out.println("Digite 'D' para DELETAR:");
-            
-            String deletar = sc.next();
-            if(deletar.equals("d") || deletar.equals("D")) {
-            
-              String query = "DELETE FROM funcionario WHERE id_funcionario = ?";
-              PreparedStatement preparedStmt = connection.prepareStatement(query);
-              preparedStmt.setInt(1, id);
+	        try (Scanner sc = new Scanner(System.in)) {
+				System.out.println("Deseja deletar esse funcionario?");
+				System.out.println("Digite 'D' para DELETAR:");
+				
+				String deletar = sc.next();
+				if(deletar.equals("d") || deletar.equals("D")) {
+				
+				  String query = "DELETE FROM funcionario WHERE id_funcionario = ?";
+				  PreparedStatement preparedStmt = connection.prepareStatement(query);
+				  preparedStmt.setInt(1, id);
 
-              // execute the preparedstatement
-              preparedStmt.execute();
-              preparedStmt.close();
-          }
+				  // execute the preparedstatement
+				  preparedStmt.execute();
+				  preparedStmt.close();
+				}
+			}
 
         } catch(SQLException e) {
             e.printStackTrace();
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }

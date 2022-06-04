@@ -22,13 +22,6 @@ public class ControleFuncionario {
 	public static void gerenciarFuncionario() {
 
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-		
-		EnderecoDAO enderecoDAO = new EnderecoDAO();
-		TelefonesDAO telefonesDAO = new TelefonesDAO();
-		DepartamentoDAO departamentoDAO = new DepartamentoDAO();
-		CargoDAO cargoDAO = new CargoDAO();
-		
-
 		Funcionario funcionario = new Funcionario();
 
 		Scanner sc = new Scanner(System.in);
@@ -38,12 +31,11 @@ public class ControleFuncionario {
 
 		//MARK: - MENU PRINCIPAL
 		do {
-			/// Limpar Mem Buffer
-//			sc = new Scanner(System.in);
 
 			imprimirMenuTelaInicialFuncionario();
 			System.out.println(" ");
-			opcaoMenuInicial = sc.nextLine().toUpperCase();
+			
+			opcaoMenuInicial = sc.nextLine().toString().toUpperCase();
 
 			//MARK: - TELA INSERIR NOVO FUNCIONARIO
 			switch(opcaoMenuInicial) {
@@ -64,20 +56,18 @@ public class ControleFuncionario {
 
 				System.out.println("\n\n");
 
-//				sc = new Scanner(System.in);
 
 				System.out.println("Insira o nome do Funcionario: ");
-				funcionario.setNome(sc.next());
+				funcionario.setNome(sc.nextLine().toString());
 				
 				System.out.println("Insira o CPF do Funcionario: ");
-				funcionario.setCpf(sc.nextLine());
+				funcionario.setCpf(sc.nextLine().toString());
 				
 				Integer parseDateContadorDeErros = 0;
 
 				do {
-					sc = new Scanner(System.in);
 					System.out.println("Nascimento (yyyy-MM-dd): ");
-					String stringDate = sc.nextLine();
+					String stringDate = sc.nextLine().toString();
 
 					try {
 						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -96,27 +86,26 @@ public class ControleFuncionario {
 					}
 				}while(parseDateContadorDeErros > 0);
 
-				sc = new Scanner(System.in);
 				System.out.println("\n# Endereço");
 				System.out.println("Insira o CEP: ");
-				endereco.setCep(sc.nextLine());
+				endereco.setCep(sc.nextLine().toString());
 
 
-				sc = new Scanner(System.in);
+				 
 
 				System.out.println("Insira o número do lote/casa: ");
-				endereco.setNumero(sc.nextInt());
+				endereco.setNumero(Integer.parseInt(sc.nextLine()));
 
-				sc = new Scanner(System.in);
+				 
 
 				System.out.println("\n# Contato");
 				System.out.println("Tel. Celular: ");
-				telefones.setCelular(sc.nextLine());
+				telefones.setCelular(sc.nextLine().toString());
 
 
-				sc = new Scanner(System.in);
+				 
 				System.out.println("Tel. Comercial: ");
-				telefones.setComercial(sc.nextLine());
+				telefones.setComercial(sc.nextLine().toString());
 
 				telefones.setResidencial("00000-0000");
 
@@ -133,10 +122,10 @@ public class ControleFuncionario {
 				telefonesDAO.addTelefones(telefones);
 				
 				System.out.println("Insira o Departamento do Funcionario: ");
-				departamento.setNome(sc.nextLine());
+				departamento.setNome(sc.nextLine().toString());
 				
 				System.out.println("Insira o Cargo do Funcionario: ");
-				cargo.setNome(sc.nextLine());
+				cargo.setNome(sc.nextLine().toString());
 				
 				
 				
@@ -147,16 +136,16 @@ public class ControleFuncionario {
 				funcionario.setId_departamento(departamento.getId_departamento());
 				
 				System.out.println("Insira o Salario do Funcionario: ");
-				funcionario.setSalario(sc.nextFloat());
+				funcionario.setSalario(Float.parseFloat(sc.nextLine()));
 				
 				System.out.println("Insira a Data de admissao do Funcionario: ");
 				
 				parseDateContadorDeErros = 0;
 
 				do {
-					sc = new Scanner(System.in);
+					 
 					System.out.println("Admissao (yyyy-MM-dd): ");
-					String stringDate = sc.nextLine();
+					String stringDate = sc.nextLine().toString();
 
 					try {
 						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -230,10 +219,8 @@ public class ControleFuncionario {
 					System.out.println("(A) Atualizar funcionario - ID");
 					System.out.println("(X) Apagar funcionario - ID");
 
-					/// Limpar Mem Buffer
-					sc = new Scanner(System.in);
 
-					opcaoMenuListagem = sc.nextLine().toUpperCase();
+					opcaoMenuListagem = sc.nextLine().toString().toUpperCase();
 
 					switch(opcaoMenuListagem) {
 					case "V":
@@ -255,9 +242,8 @@ public class ControleFuncionario {
 						System.out.println("\n\n");
 						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
 
-						/// Limpar Mem Buffer
-						sc = new Scanner(System.in);
-						idParaPesquisa = sc.nextInt();
+
+						idParaPesquisa = Integer.parseInt(sc.nextLine());
 
 						funcionario = funcionarioDAO.retrieveFuncionarioFromId(idParaPesquisa);
 						endereco = enderecoDAO.retrieveEnderecoDeId(funcionario.getPessoa().getId_endereco());
@@ -280,10 +266,8 @@ public class ControleFuncionario {
 						System.out.println("(V) Voltar para tela principal");
 						System.out.println("(L) Voltar para listagem de funcionarios");
 
-						/// Limpar Mem Buffer
-						sc = new Scanner(System.in);
 
-						opcaoMenuDetalheFuncionario = sc.nextLine().toUpperCase();
+						opcaoMenuDetalheFuncionario = sc.nextLine().toString().toUpperCase();
 
 						if(opcaoMenuDetalheFuncionario.equals("V")) {
 							opcaoMenuListagem = "V";
@@ -302,9 +286,7 @@ public class ControleFuncionario {
 						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
 
 
-						/// Limpar Mem Buffer
-						sc = new Scanner(System.in);
-						idParaPesquisa = sc.nextInt();
+						idParaPesquisa = Integer.parseInt(sc.nextLine());
 
 
 
@@ -327,7 +309,7 @@ public class ControleFuncionario {
 						System.out.println("\n\n");
 						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
 
-						funcionarioDAO.deletarFuncionario(sc.nextInt());
+						funcionarioDAO.deletarFuncionario(Integer.parseInt(sc.nextLine()));
 
 						break;
 
