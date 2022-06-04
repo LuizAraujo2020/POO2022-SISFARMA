@@ -3,11 +3,12 @@ package br.ucb.poo.beans;
 import java.sql.Date;
 
 public class Medicamento {
+	
 	private Integer id_medicamento;
-	private Integer id_laboratorio;
+	private String laboratorio;
 	private Float preco;
 	private Date dt_vencimento;
-	private String nome_medicamento;
+	private String nome;
 	private Integer qtd_estoque;
 	
 	public Integer getId_medicamento() {
@@ -16,11 +17,11 @@ public class Medicamento {
 	public void setId_medicamento(Integer id_medicamento) {
 		this.id_medicamento = id_medicamento;
 	}
-	public Integer getId_laboratorio() {
-		return id_laboratorio;
+	public String getLaboratorio() {
+		return laboratorio;
 	}
-	public void setId_laboratorio(Integer id_laboratorio) {
-		this.id_laboratorio = id_laboratorio;
+	public void setLaboratorio(String laboratorio) {
+		this.laboratorio = laboratorio;
 	}
 	public Float getPreco() {
 		return preco;
@@ -34,11 +35,11 @@ public class Medicamento {
 	public void setDt_vencimento(Date dt_vencimento) {
 		this.dt_vencimento = dt_vencimento;
 	}
-	public String getNome_medicamento() {
-		return nome_medicamento;
+	public String getNome() {
+		return nome;
 	}
-	public void setNome_medicamento(String nome_medicamento) {
-		this.nome_medicamento = nome_medicamento;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	public Integer getQtd_estoque() {
 		return qtd_estoque;
@@ -46,4 +47,5 @@ public class Medicamento {
 	public void setQtd_estoque(Integer qtd_estoque) {
 		this.qtd_estoque = qtd_estoque;
 	}
+	
 }

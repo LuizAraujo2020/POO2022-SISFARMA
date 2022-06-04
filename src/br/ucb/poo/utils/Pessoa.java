@@ -1,4 +1,4 @@
-package br.ucb.poo.beans;
+package br.ucb.poo.utils;
 
 import java.sql.Date;
 

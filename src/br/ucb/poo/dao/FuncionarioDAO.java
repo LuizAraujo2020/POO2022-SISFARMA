@@ -8,11 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import br.ucb.poo.beans.Endereco;
 import br.ucb.poo.beans.Funcionario;
-import br.ucb.poo.beans.Laboratorio;
-import br.ucb.poo.beans.Telefones;
 import br.ucb.poo.factory.Conexao;
+import br.ucb.poo.utils.Endereco;
+import br.ucb.poo.utils.Laboratorio;
+import br.ucb.poo.utils.PessoaDAO;
+import br.ucb.poo.utils.Telefones;
 import br.ucb.poo.views.LaboratorioView;
 
 public class FuncionarioDAO {

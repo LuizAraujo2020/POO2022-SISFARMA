@@ -1,4 +1,4 @@
-package br.ucb.poo.dao;
+package br.ucb.poo.utils;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import br.ucb.poo.beans.Pessoa;
 import br.ucb.poo.factory.Conexao;
 
 public class PessoaDAO {

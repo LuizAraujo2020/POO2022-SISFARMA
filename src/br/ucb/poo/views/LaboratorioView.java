@@ -2,8 +2,8 @@ package br.ucb.poo.views;
 
 import java.util.ArrayList;
 
-import br.ucb.poo.beans.Laboratorio;
-import br.ucb.poo.dao.LaboratorioDAO;
+import br.ucb.poo.utils.Laboratorio;
+import br.ucb.poo.utils.LaboratorioDAO;
 
 final public class LaboratorioView {
 	

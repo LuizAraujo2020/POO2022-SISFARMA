@@ -1,9 +1,21 @@
 package br.ucb.poo.beans;
 
+import br.ucb.poo.utils.Pessoa;
+
 public class Cliente extends Pessoa {
 	private Integer id_cliente;
 	private Integer id_pessoa;
 	private Integer qtd_compras;
+
+	
+//	private String cpf;
+//	private Date dt_nascimento;
+//	private String endereco;
+//	private Integer id_cliente;
+//	private String nome;
+//	private String cliente;
+//	private String qtd_compras;
+//	private String telefone;
 	
 	public Integer getId_cliente() {
 		return id_cliente;

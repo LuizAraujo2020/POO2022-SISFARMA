@@ -1,4 +1,4 @@
-package br.ucb.poo.beans;
+package br.ucb.poo.utils;
 
 public class Cargo {
 	private Integer id_cargo;

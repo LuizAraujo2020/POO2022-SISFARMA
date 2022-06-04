@@ -6,24 +6,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-import br.ucb.poo.beans.Endereco;
-import br.ucb.poo.beans.Laboratorio;
 import br.ucb.poo.beans.Medicamento;
-import br.ucb.poo.beans.Telefones;
-import br.ucb.poo.dao.EnderecoDAO;
-import br.ucb.poo.dao.LaboratorioDAO;
 import br.ucb.poo.dao.MedicamentoDAO;
-import br.ucb.poo.dao.TelefonesDAO;
+import br.ucb.poo.utils.Endereco;
+import br.ucb.poo.utils.EnderecoDAO;
+import br.ucb.poo.utils.Laboratorio;
+import br.ucb.poo.utils.LaboratorioDAO;
+import br.ucb.poo.utils.Telefones;
+import br.ucb.poo.utils.TelefonesDAO;
 
 public class ControleMedicamento {
 
 	public static void gerenciarMedicamento() {
 
 		MedicamentoDAO medicamentoDAO = new MedicamentoDAO();
-		LaboratorioDAO laboratorioDAO = new LaboratorioDAO();
-		EnderecoDAO enderecoDAO = new EnderecoDAO();
-		TelefonesDAO telefonesDAO = new TelefonesDAO();
-
 		Medicamento medicamento = new Medicamento();
 
 		Scanner sc = new Scanner(System.in);
@@ -33,17 +29,15 @@ public class ControleMedicamento {
 
 		//MARK: - MENU PRINCIPAL
 		do {
-			/// Limpar Mem Buffer
-			sc = new Scanner(System.in);
 
 			imprimirMenuTelaInicialMedicamento();
 			System.out.println(" ");
-			opcaoMenuInicial = sc.nextLine().toUpperCase();
+			opcaoMenuInicial = sc.nextLine().toString().toUpperCase();
 
 			//MARK: - TELA INSERIR NOVO MEDICAMENTO
 			switch(opcaoMenuInicial) {
 			case "I":
-				
+
 				medicamento = new Medicamento();
 
 				Laboratorio laboratorio = new Laboratorio();
@@ -59,85 +53,29 @@ public class ControleMedicamento {
 
 				System.out.println("\n\n");
 
-				sc = new Scanner(System.in);
-
 				System.out.println("Insira o nome do Laboratório: ");
-				nomeLaboratorio = sc.next();
-
-				idLaboratorio = laboratorioDAO.retrieveIdLaboratorioDeNome(nomeLaboratorio);
+				nomeLaboratorio = sc.nextLine().toString();
 
 
-				if(idLaboratorio >= 0) {
-					medicamento.setId_laboratorio(idLaboratorio);
 
-				} else {
-					System.out.println("Laboratório ainda não cadastrado!");
-					System.out.println("Por favor insira: ");
-
-					laboratorio = new Laboratorio();
-
-					// Pega o nome fornecido anteriormente.
-					laboratorio.setNome(nomeLaboratorio);
-
-					sc = new Scanner(System.in);
-					System.out.println("\n# Endereço");
-					System.out.println("Insira o CEP: ");
-					endereco.setCep(sc.nextLine());
+				//				System.out.println("Telefone: ");
+				//				medicamento.setTelefone(sc.nextLine().toString());
 
 
-					sc = new Scanner(System.in);
 
-					System.out.println("Insira o número do lote/casa: ");
-					endereco.setNumero(sc.nextInt());
-
-					sc = new Scanner(System.in);
-
-					System.out.println("\n# Contato");
-					System.out.println("Tel. Celular: ");
-					telefones.setCelular(sc.nextLine());
-
-
-					sc = new Scanner(System.in);
-					System.out.println("Tel. Comercial: ");
-					telefones.setComercial(sc.nextLine());
-
-					telefones.setResidencial("00000-0000");
-
-
-					enderecoDAO.addEndereco(endereco);
-					telefonesDAO.addTelefones(telefones);
-
-					// Conectar os ID do Telefones e do Endereco como o Laboratorio.
-					endereco.setId_endereco(enderecoDAO.retrieveIdEndereco(endereco));
-					telefones.setId_telefones(telefonesDAO.retrieveIdDeTelefones(telefones));
-
-					// Por o Endereco e o Telefones no Laboratorio.
-					laboratorio.setEndereco(endereco);
-					laboratorio.setTelefones(telefones);
-
-					laboratorioDAO.addLaboratorio(laboratorio);
-
-					medicamento.setId_laboratorio(laboratorioDAO.retrieveIdLaboratorioDeNome(laboratorio.getNome()));
-
-				}
-
-
-				// Limpar Buffer
-				sc = new Scanner(System.in);
 				System.out.println("Nome do Medicamento:");
-				medicamento.setNome_medicamento(sc.nextLine());
+				medicamento.setNome(sc.nextLine().toString());
 
 
-				sc = new Scanner(System.in);
 				System.out.println("Valor do medicamento: R$ ");
-				medicamento.setPreco(sc.nextFloat());
+				medicamento.setPreco(Float.parseFloat(sc.nextLine()));
 
 				Integer parseDateContadorDeErros = 0;
 
 				do {
-					sc = new Scanner(System.in);
+
 					System.out.println("Vencimento (yyyy-MM-dd): ");
-					String stringDate = sc.nextLine();
+					String stringDate = sc.nextLine().toString();
 
 					try {
 						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -156,11 +94,11 @@ public class ControleMedicamento {
 					}
 				}while(parseDateContadorDeErros > 0);
 
-				sc = new Scanner(System.in);
+
 				System.out.println("Quantidade em estoque: ");
-				medicamento.setQtd_estoque(sc.nextInt());
-				
-				medicamentoDAO.addMedicamento(medicamento, nomeLaboratorio);
+				medicamento.setQtd_estoque(Integer.parseInt(sc.nextLine()));
+
+				medicamentoDAO.addMedicamento(medicamento);
 				break;
 
 				//MARK: - TELA LISTAGEM
@@ -176,7 +114,7 @@ public class ControleMedicamento {
 
 					System.out.println("--------------------------");
 					for(Medicamento med : medicamentoDAO.retrieveMedicamento() ){
-						System.out.println(med.getId_medicamento() + " - " + med.getNome_medicamento());
+						System.out.println(med.getId_medicamento() + " - " + med.getNome());
 					}
 
 					System.out.println("\n");
@@ -187,10 +125,8 @@ public class ControleMedicamento {
 					System.out.println("(A) Atualizar medicamento - ID");
 					System.out.println("(X) Apagar medicamento - ID");
 
-					/// Limpar Mem Buffer
-					sc = new Scanner(System.in);
 
-					opcaoMenuListagem = sc.nextLine().toUpperCase();
+					opcaoMenuListagem = sc.nextLine().toString().toUpperCase();
 
 					switch(opcaoMenuListagem) {
 					case "V":
@@ -201,7 +137,6 @@ public class ControleMedicamento {
 						Integer idParaPesquisa = 0;
 						String opcaoMenuDetalheMedicamento = "";
 
-						String nomeLaboratorioParaImprimir = "";
 						Integer idLaboratorioParaImprimir = 0;
 
 						medicamento = new Medicamento();
@@ -212,23 +147,22 @@ public class ControleMedicamento {
 						System.out.println("\n\n");
 						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
 
-						/// Limpar Mem Buffer
-						sc = new Scanner(System.in);
-						idParaPesquisa = sc.nextInt();
+
+						idParaPesquisa = Integer.parseInt(sc.nextLine());
 
 						medicamento = medicamentoDAO.retrieveMedicamentoFromId(idParaPesquisa);
-						laboratorio = laboratorioDAO.retrieveLaboratorioDeID(medicamento.getId_laboratorio());
 
 						imprimirHeader();	
 
-						if(medicamento.getId_medicamento() == null) {
+						if(medicamento == null) {
 							System.out.println("MEDICAMENTO NAO ENCONTRADO!");
 							break;
+							
 						}
 						System.out.println("DETALHES DO MEDICAMENTO ID: " + medicamento.getId_medicamento());
 						System.out.println("\n\n");
-						System.out.println("Nome: " + medicamento.getNome_medicamento());
-						System.out.println("Laboratório: " + laboratorio.getId_laboratorio() + " - " + laboratorio.getNome());
+						System.out.println("Nome: " + medicamento.getNome());
+						System.out.println("Laboratório: " + medicamento.getLaboratorio());
 						System.out.println("Preço: R$ " + medicamento.getPreco());
 						System.out.println("Estoque: " + medicamento.getQtd_estoque());
 
@@ -236,17 +170,14 @@ public class ControleMedicamento {
 						System.out.println("(V) Voltar para tela principal");
 						System.out.println("(L) Voltar para listagem de medicamentos");
 
-						/// Limpar Mem Buffer
-						sc = new Scanner(System.in);
-
-						opcaoMenuDetalheMedicamento = sc.nextLine().toUpperCase();
+						opcaoMenuDetalheMedicamento = sc.nextLine().toString().toUpperCase();
 
 						if(opcaoMenuDetalheMedicamento.equals("V")) {
 							opcaoMenuListagem = "V";
 
 						}
 						break;
-						
+
 					case "A":
 
 						//TODO: FAZER MENU PARA ESCOLHER CAMPO A SER ALTERADO 
@@ -258,14 +189,10 @@ public class ControleMedicamento {
 						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
 
 
-						/// Limpar Mem Buffer
-						sc = new Scanner(System.in);
-						idParaPesquisa = sc.nextInt();
-
+						idParaPesquisa = Integer.parseInt(sc.nextLine());
 
 
 						System.out.println("Editar");
-
 
 						Medicamento medicamentoAtual = new Medicamento();
 						Medicamento medicamentoNovo = new Medicamento();
@@ -273,24 +200,18 @@ public class ControleMedicamento {
 						medicamentoAtual = medicamentoDAO.retrieveMedicamentoFromId(idParaPesquisa);
 						medicamentoNovo = medicamentoAtual;
 
-
-
-						/// Limpar Mem Buffer
-						sc = new Scanner(System.in);
-
-						System.out.println("Nome atual: " + medicamentoAtual.getNome_medicamento());
-						medicamentoNovo.setNome_medicamento(sc.nextLine());
+						System.out.println("Nome atual: " + medicamentoAtual.getNome());
+						medicamentoNovo.setNome(sc.nextLine().toString());
 
 						System.out.println("Preço atual: " + medicamentoAtual.getPreco());
-						medicamentoNovo.setPreco(sc.nextFloat());
+						medicamentoNovo.setPreco(Float.parseFloat(sc.nextLine()));
 
 
 						parseDateContadorDeErros = 0;
 
 						do {
-							sc = new Scanner(System.in);
 							System.out.println("Vencimento (yyyy-MM-dd): ");
-							String stringDate = sc.nextLine();
+							String stringDate = sc.nextLine().toString();
 
 							try {
 								DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -311,7 +232,7 @@ public class ControleMedicamento {
 
 
 						System.out.println("Quantidade em estoque atual: " + medicamentoAtual.getQtd_estoque());
-						medicamentoNovo.setQtd_estoque(sc.nextInt());
+						medicamentoNovo.setQtd_estoque(Integer.parseInt(sc.nextLine()));
 
 
 
@@ -319,7 +240,7 @@ public class ControleMedicamento {
 						System.out.println("Digite 's' para SALVAR:");
 						String salvar = sc.next();
 						if(salvar.equals("s") || salvar.equals("S")) {
-							medicamentoDAO.updateMedicamento(medicamentoNovo, medicamentoAtual.getId_medicamento());
+							medicamentoDAO.updateMedicamento(medicamentoNovo);
 						}
 
 						break;

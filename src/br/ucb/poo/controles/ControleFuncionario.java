@@ -6,16 +6,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-import br.ucb.poo.beans.Cargo;
-import br.ucb.poo.beans.Departamento;
-import br.ucb.poo.beans.Endereco;
 import br.ucb.poo.beans.Funcionario;
-import br.ucb.poo.beans.Telefones;
-import br.ucb.poo.dao.CargoDAO;
-import br.ucb.poo.dao.DepartamentoDAO;
-import br.ucb.poo.dao.EnderecoDAO;
 import br.ucb.poo.dao.FuncionarioDAO;
-import br.ucb.poo.dao.TelefonesDAO;
+import br.ucb.poo.utils.Cargo;
+import br.ucb.poo.utils.CargoDAO;
+import br.ucb.poo.utils.Departamento;
+import br.ucb.poo.utils.DepartamentoDAO;
+import br.ucb.poo.utils.Endereco;
+import br.ucb.poo.utils.EnderecoDAO;
+import br.ucb.poo.utils.Telefones;
+import br.ucb.poo.utils.TelefonesDAO;
 
 public class ControleFuncionario {
 

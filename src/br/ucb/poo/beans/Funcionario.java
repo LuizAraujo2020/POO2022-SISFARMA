@@ -2,6 +2,8 @@ package br.ucb.poo.beans;
 
 import java.sql.Date;
 
+import br.ucb.poo.utils.Pessoa;
+
 public class Funcionario extends Pessoa {
 	private Integer id_funcionario;
 	private Integer id_cargo;

@@ -1,4 +1,4 @@
-package br.ucb.poo.beans;
+package br.ucb.poo.utils;
 
 public class Laboratorio {
 	private Integer id_laboratorio;
