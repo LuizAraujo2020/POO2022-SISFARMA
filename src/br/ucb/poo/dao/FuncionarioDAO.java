@@ -100,14 +100,39 @@ public class FuncionarioDAO {
 		return null;
 	}
 	
+	
+	public Funcionario retrieveFuncionarioFromCpf(String cpf) {
+		ArrayList<Funcionario> funcionarios = retrieveFuncionario();
+		for(Funcionario func : funcionarios) {
+			if(func.getCpf().equals(cpf)) {
+				return func;
+			}
+		}
+		return null;
+	}
+	
 	public void updateFuncionario(Funcionario funcionarioNovo) {
 		try {
             
-            String query = "UPDATE funcionario SET (salario = ?, dt_admissao = ?) WHERE id_funcionario = ?";
+            String query = "UPDATE funcionario SET (endereco = ?, telefone = ?, cpf = ?, nome = ?, dt_nascimento = ?, cargo = ?, departamento = ?, salario = ?, dt_admissao = ?) WHERE id_funcionario = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setFloat(1, funcionarioNovo.getSalario());
-            preparedStmt.setDate(2, funcionarioNovo.getDt_admissao());
-            preparedStmt.setInt(3, funcionarioNovo.getId_funcionario());
+
+            preparedStmt.setString(1, funcionarioNovo.getEndereco());
+            preparedStmt.setString(2, funcionarioNovo.getTelefone());
+            preparedStmt.setString(3, funcionarioNovo.getCpf());
+			preparedStmt.setString(4, funcionarioNovo.getNome());
+			preparedStmt.setDate(5, funcionarioNovo.getDt_nascimento());
+			preparedStmt.setString(6, funcionarioNovo.getCargo());
+			preparedStmt.setString(7, funcionarioNovo.getDepartamento());
+			preparedStmt.setFloat(8, funcionarioNovo.getSalario());
+			preparedStmt.setDate(9, funcionarioNovo.getDt_admissao());
+			
+//            preparedStmt.setString(, funcionarioNovo.getSalario());
+//            preparedStmt.setDate(2, funcionarioNovo.getDt_admissao());
+//            preparedStmt.setInt(3, funcionarioNovo.getId_funcionario());
+            
+            
+            
             preparedStmt.executeUpdate();  
 			
 
@@ -135,13 +160,13 @@ public class FuncionarioDAO {
 
 	        Scanner sc = new Scanner(System.in);
                 
-            System.out.println("Deseja deletar esse produto?");
+            System.out.println("Deseja deletar esse funcionario?");
             System.out.println("Digite 'D' para DELETAR:");
             
             String deletar = sc.next();
             if(deletar.equals("d") || deletar.equals("D")) {
             
-              String query = "delete from funcionario where id_funcionario = ?";
+              String query = "DELETE FROM funcionario WHERE id_funcionario = ?";
               PreparedStatement preparedStmt = connection.prepareStatement(query);
               preparedStmt.setInt(1, id);
 
