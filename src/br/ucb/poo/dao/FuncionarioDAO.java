@@ -58,7 +58,7 @@ public class FuncionarioDAO {
 //		private Float salario;
 //		private Date dt_admissao;
 
-		String sql = "SELECT (id_funcionario, endereco, telefone, salario, cpf, nome, dt_nascimento, cargo, departamento, salario, dt_admissao) FROM funcionario";
+		String sql = "SELECT (id_funcionario, endereco, telefone, salario, cpf, nome, dt_nascimento, cargo, departamento, dt_admissao) FROM funcionario";
 		
 		ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
 		PreparedStatement pstmt;
@@ -68,17 +68,16 @@ public class FuncionarioDAO {
 			while(rs.next()){
 				Funcionario funcionario = new Funcionario();
 
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
-				funcionario.set(rs.getInt(""));
+				funcionario.setId_funcionario(rs.getInt("id_funcionario"));
+				funcionario.setEndereco(rs.getString("endereco"));
+				funcionario.setTelefone(rs.getString("telefone"));
+				funcionario.setCpf(rs.getString("cpf"));
+				funcionario.setNome(rs.getString("nome"));
+				funcionario.setDt_nascimento(rs.getDate("dt_nascimento"));
+				funcionario.setCargo(rs.getString("cargo"));
+				funcionario.setDepartamento(rs.getString("departamento"));
+				funcionario.setSalario(rs.getFloat("salario"));
+				funcionario.setDt_admissao(rs.getDate("dt_admissao"));
 
 				funcionarios.add(funcionario);
 			}

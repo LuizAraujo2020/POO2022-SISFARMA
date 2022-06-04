@@ -11,7 +11,6 @@ import br.ucb.poo.beans.Medicamento;
 import br.ucb.poo.factory.Conexao;
 
 public class MedicamentoDAO {
-
 	Conexao conexao = new Conexao();
 	Connection connection = conexao.conectar();
 
