@@ -8,12 +8,6 @@ import java.util.Scanner;
 
 import br.ucb.poo.beans.Medicamento;
 import br.ucb.poo.dao.MedicamentoDAO;
-import br.ucb.poo.utils.Endereco;
-import br.ucb.poo.utils.EnderecoDAO;
-import br.ucb.poo.utils.Laboratorio;
-import br.ucb.poo.utils.LaboratorioDAO;
-import br.ucb.poo.utils.Telefones;
-import br.ucb.poo.utils.TelefonesDAO;
 
 public class ControleMedicamento {
 
@@ -40,29 +34,12 @@ public class ControleMedicamento {
 
 				medicamento = new Medicamento();
 
-				Laboratorio laboratorio = new Laboratorio();
-				Endereco endereco = new Endereco();
-				Telefones telefones = new Telefones();
-
-				Integer idLaboratorio;
-				String nomeLaboratorio = "";
-
 				imprimirHeader();	
 
 				System.out.println("CADASTRO DE MEDICAMENTO");
-
 				System.out.println("\n\n");
-
 				System.out.println("Insira o nome do Laboratório: ");
-				nomeLaboratorio = sc.nextLine().toString();
-
-
-
-				//				System.out.println("Telefone: ");
-				//				medicamento.setTelefone(sc.nextLine().toString());
-
-
-
+				
 				System.out.println("Nome do Medicamento:");
 				medicamento.setNome(sc.nextLine().toString());
 
@@ -101,6 +78,7 @@ public class ControleMedicamento {
 				medicamentoDAO.addMedicamento(medicamento);
 				break;
 
+				
 				//MARK: - TELA LISTAGEM
 			case "L":
 				do {
@@ -136,8 +114,6 @@ public class ControleMedicamento {
 					case "E":
 						Integer idParaPesquisa = 0;
 						String opcaoMenuDetalheMedicamento = "";
-
-						Integer idLaboratorioParaImprimir = 0;
 
 						medicamento = new Medicamento();
 
@@ -253,7 +229,7 @@ public class ControleMedicamento {
 						System.out.println("\n\n");
 						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
 
-						medicamentoDAO.deletarMedicamento(sc.nextInt());
+						medicamentoDAO.deletarMedicamento(Integer.parseInt(sc.nextLine()));
 
 						break;
 

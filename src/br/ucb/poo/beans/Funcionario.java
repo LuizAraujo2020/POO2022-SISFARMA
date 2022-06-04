@@ -6,29 +6,28 @@ import br.ucb.poo.utils.Pessoa;
 
 public class Funcionario extends Pessoa {
 	private Integer id_funcionario;
-	private Integer id_cargo;
-	private Integer id_departamento;
-	private Integer id_pessoa;
+	private Integer cargo;
+	private Integer departamento;
 	private Float salario;
 	private Date dt_adimissao;
-	
+	s
 	public Integer getId_funcionario() {
 		return id_funcionario;
 	}
 	public void setId_funcionario(Integer id_funcionario) {
 		this.id_funcionario = id_funcionario;
 	}
-	public Integer getId_cargo() {
-		return id_cargo;
+	public Integer getCargo() {
+		return cargo;
 	}
-	public void setId_cargo(Integer id_cargo) {
-		this.id_cargo = id_cargo;
+	public void setCargo(Integer cargo) {
+		this.cargo = cargo;
 	}
-	public Integer getId_departamento() {
-		return id_departamento;
+	public Integer getDepartamento() {
+		return departamento;
 	}
-	public void setId_departamento(Integer id_departamento) {
-		this.id_departamento = id_departamento;
+	public void setDepartamento(Integer departamento) {
+		this.departamento = departamento;
 	}
 	public Float getSalario() {
 		return salario;
@@ -41,11 +40,5 @@ public class Funcionario extends Pessoa {
 	}
 	public void setDt_adimissao(Date dt_adimissao) {
 		this.dt_adimissao = dt_adimissao;
-	}
-	public Integer getId_pessoa() {
-		return id_pessoa;
-	}
-	public void setId_pessoa(Integer id_pessoa) {
-		this.id_pessoa = id_pessoa;
 	}
 }

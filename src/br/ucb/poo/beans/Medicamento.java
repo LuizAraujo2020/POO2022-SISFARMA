@@ -3,7 +3,6 @@ package br.ucb.poo.beans;
 import java.sql.Date;
 
 public class Medicamento {
-	
 	private Integer id_medicamento;
 	private String laboratorio;
 	private Float preco;

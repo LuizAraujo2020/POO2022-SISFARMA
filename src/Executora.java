@@ -13,23 +13,24 @@ public class Executora {
 	public static void main(String args[]) {
 		String opcaoMenuPrincipal = "A";
 		
-		
 		do {
 			imprimirHeader();
 			imprimirMenuTelaInicial();
 			
-			Scanner scanner = new Scanner(System.in);
-			opcaoMenuPrincipal = scanner.next().toUpperCase();
+			try (Scanner scanner = new Scanner(System.in)) {
+				opcaoMenuPrincipal = scanner.next().toUpperCase();
+			}
+			
 			System.out.println("");
 
 			
 			switch(opcaoMenuPrincipal) {
 				case "M":
-					controleMedicamento.gerenciarMedicamento();
+					ControleMedicamento.gerenciarMedicamento();
 					break;
 	
 				case "F":
-					controleFuncionario.gerenciarFuncionario();
+					ControleFuncionario.gerenciarFuncionario();
 					break;
 			}
 			
