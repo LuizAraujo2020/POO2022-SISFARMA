@@ -95,7 +95,7 @@ public class MedicamentoDAO {
 	public void updateMedicamento(Medicamento medicamentoNovo) {
 		
 		try {
-             String query = "UPDATE medicamento SET (nome = ?, laboratorio = ?, preco = ?,  dt_vencimento = ?,  qtd_estoque = ?) WHERE id_medicamento = ?";
+             String query = "UPDATE medicamento SET nome = ?, laboratorio = ?, preco = ?,  dt_vencimento = ?,  qtd_estoque = ? WHERE id_medicamento = ?";
              PreparedStatement preparedStmt = connection.prepareStatement(query);
              preparedStmt.setString(1, medicamentoNovo.getNome());
              preparedStmt.setString(2, medicamentoNovo.getLaboratorio());
