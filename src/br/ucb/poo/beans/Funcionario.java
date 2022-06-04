@@ -13,7 +13,7 @@ public class Funcionario {
 	private String departamento;
 	private Float salario;
 	private Date dt_admissao;
-	
+
 	public String getEndereco() {
 		return endereco;
 	}
