@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import br.ucb.poo.beans.Medicamento;
+import br.ucb.poo.controles.Leitora;
 import br.ucb.poo.factory.Conexao;
 
 public class MedicamentoDAO {
 	Conexao conexao = new Conexao();
 	Connection connection = conexao.conectar();
 
+	Leitora leitora = new Leitora();
 	
 	public void addMedicamento(Medicamento medicamento){
 		try {
@@ -113,32 +115,30 @@ public class MedicamentoDAO {
 		System.out.println(medicamento.getId_medicamento() + " - " + medicamento.getNome());
         
 	    System.out.println("Deseja deletar esse produto?");
-	    System.out.println("Digite 'D' para DELETAR:");
 		
 		
 		try {
-
-	        try (Scanner sc = new Scanner(System.in)) {
-				String deletar = sc.nextLine().toString();
-					
-					if(deletar.equals("d") || deletar.equals("D")) {
-					
-					  String query = "DELETE FROM medicamento WHERE id_medicamento = ?";
-					  PreparedStatement preparedStmt = connection.prepareStatement(query);
-					  
-					  preparedStmt.setInt(1, medicamento.getId_medicamento());
-		
-					  // execute the preparedstatement
-					  preparedStmt.execute();
-					  preparedStmt.close();
-				}
+			String deletar = leitora.leTexto("Digite 'D' para DELETAR:");
+				
+				if(deletar.equals("d") || deletar.equals("D")) {
+				
+				  String query = "DELETE FROM medicamento WHERE id_medicamento = ?";
+				  PreparedStatement preparedStmt = connection.prepareStatement(query);
+				  
+				  preparedStmt.setInt(1, medicamento.getId_medicamento());
+	
+				  // execute the preparedstatement
+				  preparedStmt.execute();
+				  preparedStmt.close();
 			}
+		
         } catch(SQLException e) {
             e.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 	}
+	
 	
 	public void deletarMedicamento(Integer id) {
 		Medicamento medicamento = retrieveMedicamentoFromId(id);
@@ -147,13 +147,12 @@ public class MedicamentoDAO {
 		
 		System.out.println("--------------------------");
 		System.out.println(medicamento.getId_medicamento() + " - " + medicamento.getNome());
+//		System.out.println(id + " ID");
         
-	    System.out.println("Deseja deletar esse produto?");
-	    System.out.println("Digite 'D' para DELETAR:");
+	    System.out.println("\n\nDeseja deletar esse produto?");
 		
 		try {
-	        try (Scanner sc = new Scanner(System.in)) {
-				String deletar = sc.nextLine().toString();
+				String deletar = leitora.leTexto("Digite 'D' para DELETAR:");
 				
 				if(deletar.equals("d") || deletar.equals("D")) {
 				
@@ -165,7 +164,7 @@ public class MedicamentoDAO {
 				  preparedStmt.execute();
 				  preparedStmt.close();
 				}
-			}
+			
         } catch(SQLException e) {
             e.printStackTrace();
         } catch (Exception ex) {

@@ -17,9 +17,8 @@ public class Executora {
 			imprimirHeader();
 			imprimirMenuTelaInicial();
 			
-			try (Scanner scanner = new Scanner(System.in)) {
-				opcaoMenuPrincipal = scanner.next().toUpperCase();
-			}
+			Scanner sc = new Scanner(System.in);
+			opcaoMenuPrincipal = sc.next().toUpperCase();
 			
 			System.out.println("");
 

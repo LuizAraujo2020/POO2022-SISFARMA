@@ -1,22 +1,15 @@
 package br.ucb.poo.controles;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
-
 import br.ucb.poo.beans.Medicamento;
 import br.ucb.poo.dao.MedicamentoDAO;
 
 public class ControleMedicamento {
 
 	public static void gerenciarMedicamento() {
+		Leitora leitora = new Leitora();
 
 		MedicamentoDAO medicamentoDAO = new MedicamentoDAO();
 		Medicamento medicamento = new Medicamento();
-
-		Scanner sc = new Scanner(System.in);
 
 		String opcaoMenuInicial = "";
 		String opcaoMenuListagem = "";
@@ -26,7 +19,7 @@ public class ControleMedicamento {
 
 			imprimirMenuTelaInicialMedicamento();
 			System.out.println(" ");
-			opcaoMenuInicial = sc.nextLine().toString().toUpperCase();
+			opcaoMenuInicial = leitora.leTexto("").toUpperCase();
 
 			//MARK: - TELA INSERIR NOVO MEDICAMENTO
 			switch(opcaoMenuInicial) {
@@ -38,42 +31,18 @@ public class ControleMedicamento {
 
 				System.out.println("CADASTRO DE MEDICAMENTO");
 				System.out.println("\n\n");
-				System.out.println("Insira o nome do Laboratório: ");
-				
-				System.out.println("Nome do Medicamento:");
-				medicamento.setNome(sc.nextLine().toString());
+				medicamento.setNome(leitora.leTexto("Nome do Medicamento:"));
 
 
-				System.out.println("Valor do medicamento: R$ ");
-				medicamento.setPreco(Float.parseFloat(sc.nextLine()));
-
-				Integer parseDateContadorDeErros = 0;
-
-				do {
-
-					System.out.println("Vencimento (yyyy-MM-dd): ");
-					String stringDate = sc.nextLine().toString();
-
-					try {
-						DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-						Date myDate = formatter.parse(stringDate);
-						java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-						sqlDate = new java.sql.Date(myDate.getTime());
-
-						medicamento.setDt_vencimento(sqlDate);
-
-						parseDateContadorDeErros = 0;
-
-					} catch (ParseException e1) {
-						//						e1.printStackTrace();
-						parseDateContadorDeErros += 1;
-						System.out.println("Data inválida!");
-					}
-				}while(parseDateContadorDeErros > 0);
+				medicamento.setPreco(leitora.leFloat("Valor do medicamento: R$ "));
 
 
-				System.out.println("Quantidade em estoque: ");
-				medicamento.setQtd_estoque(Integer.parseInt(sc.nextLine()));
+				medicamento.setDt_vencimento(leitora.leDate("Vencimento (dd-MM-yyyy): "));
+
+
+
+				System.out.println("");
+				medicamento.setQtd_estoque(leitora.leInteiro("Quantidade em estoque: "));
 
 				medicamentoDAO.addMedicamento(medicamento);
 				break;
@@ -98,13 +67,12 @@ public class ControleMedicamento {
 					System.out.println("\n");
 
 					System.out.println("Escolha uma opção:");
-					System.out.println("(V) Voltar para tela principal");
+					System.out.println("(V) Voltar para Menu Gerenciar Medicamento");
 					System.out.println("(E) Exibir um medicamento pelo - ID");
 					System.out.println("(A) Atualizar medicamento - ID");
 					System.out.println("(X) Apagar medicamento - ID");
 
-
-					opcaoMenuListagem = sc.nextLine().toString().toUpperCase();
+					opcaoMenuListagem = leitora.leTexto("").toUpperCase();
 
 					switch(opcaoMenuListagem) {
 					case "V":
@@ -121,10 +89,7 @@ public class ControleMedicamento {
 
 						System.out.println("DETALHES DO MEDICAMENTO");
 						System.out.println("\n\n");
-						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
-
-
-						idParaPesquisa = Integer.parseInt(sc.nextLine());
+						idParaPesquisa = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
 
 						medicamento = medicamentoDAO.retrieveMedicamentoFromId(idParaPesquisa);
 
@@ -143,10 +108,11 @@ public class ControleMedicamento {
 						System.out.println("Estoque: " + medicamento.getQtd_estoque());
 
 						System.out.println("\nEscolha uma opção:");
-						System.out.println("(V) Voltar para tela principal");
+						System.out.println("(V) Voltar para Menu Gerenciar Medicamento");
 						System.out.println("(L) Voltar para listagem de medicamentos");
+						System.out.println("(X) Voltar para listagem de medicamentos");
 
-						opcaoMenuDetalheMedicamento = sc.nextLine().toString().toUpperCase();
+						opcaoMenuDetalheMedicamento = leitora.leTexto("OPCAO: ").toUpperCase();
 
 						if(opcaoMenuDetalheMedicamento.equals("V")) {
 							opcaoMenuListagem = "V";
@@ -162,10 +128,7 @@ public class ControleMedicamento {
 
 						System.out.println("ATUALIZAR MEDICAMENTO");
 						System.out.println("\n\n");
-						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
-
-
-						idParaPesquisa = Integer.parseInt(sc.nextLine());
+						idParaPesquisa = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
 
 
 						System.out.println("Editar");
@@ -176,45 +139,19 @@ public class ControleMedicamento {
 						medicamentoAtual = medicamentoDAO.retrieveMedicamentoFromId(idParaPesquisa);
 						medicamentoNovo = medicamentoAtual;
 
-						System.out.println("Nome atual: " + medicamentoAtual.getNome());
-						medicamentoNovo.setNome(sc.nextLine().toString());
+						medicamentoNovo.setNome(leitora.leTexto("Nome atual: " + medicamentoAtual.getNome()));
 
-						System.out.println("Preço atual: " + medicamentoAtual.getPreco());
-						medicamentoNovo.setPreco(Float.parseFloat(sc.nextLine()));
+						medicamentoNovo.setPreco(leitora.leFloat("Preço atual: " + medicamentoAtual.getPreco()));
 
 
-						parseDateContadorDeErros = 0;
+						medicamentoNovo.setDt_vencimento(leitora.leDate("Vencimento"));
 
-						do {
-							System.out.println("Vencimento (yyyy-MM-dd): ");
-							String stringDate = sc.nextLine().toString();
-
-							try {
-								DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-								Date myDate = formatter.parse(stringDate);
-								java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
-								sqlDate = new java.sql.Date(myDate.getTime());
-
-								medicamentoNovo.setDt_vencimento(sqlDate);
-
-								parseDateContadorDeErros = 0;
-
-							} catch (ParseException e1) {
-								//    								e1.printStackTrace();
-								parseDateContadorDeErros += 1;
-								System.out.println("Data invÃ¡lida!");
-							}
-						}while(parseDateContadorDeErros > 0);
-
-
-						System.out.println("Quantidade em estoque atual: " + medicamentoAtual.getQtd_estoque());
-						medicamentoNovo.setQtd_estoque(Integer.parseInt(sc.nextLine()));
+						medicamentoNovo.setQtd_estoque(leitora.leInteiro("Quantidade em estoque atual: " + medicamentoAtual.getQtd_estoque()));
 
 
 
 						System.out.println("Deseja confirmar a alteracao?");
-						System.out.println("Digite 's' para SALVAR:");
-						String salvar = sc.next();
+						String salvar = leitora.leTexto("Digite 's' para SALVAR:");
 						if(salvar.equals("s") || salvar.equals("S")) {
 							medicamentoDAO.updateMedicamento(medicamentoNovo);
 						}
@@ -227,9 +164,11 @@ public class ControleMedicamento {
 
 						System.out.println("APAGAR MEDICAMENTO");
 						System.out.println("\n\n");
-						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
-
-						medicamentoDAO.deletarMedicamento(Integer.parseInt(sc.nextLine()));
+						Integer idParaApagar = 0;
+						idParaApagar = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
+//						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
+//						Integer idParaApagar = scanner.nextInt();
+						medicamentoDAO.deletarMedicamento(idParaApagar);
 
 						break;
 
@@ -245,7 +184,7 @@ public class ControleMedicamento {
 
 		} while((opcaoMenuInicial.equalsIgnoreCase("I")) || (opcaoMenuInicial.equalsIgnoreCase("L")));
 
-		sc.close();
+//		scanner.close();
 		imprimirBottom();
 	}
 

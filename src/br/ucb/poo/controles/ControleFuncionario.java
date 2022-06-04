@@ -23,11 +23,11 @@ public class ControleFuncionario {
 
 		//MARK: - MENU PRINCIPAL
 		do {
-
+			
 			imprimirMenuTelaInicialFuncionario();
 			System.out.println(" ");
 			
-			opcaoMenuInicial = sc.nextLine().toString().toUpperCase();
+			opcaoMenuInicial = sc.nextLine().toString();
 
 			//MARK: - TELA INSERIR NOVO FUNCIONARIO
 			switch(opcaoMenuInicial) {
