@@ -17,7 +17,7 @@ public class Executora {
 			imprimirHeader();
 			imprimirMenuTelaInicial();
 
-			opcaoMenuPrincipal = Leitora.getInstance().leTexto("aaaaaaaa").toUpperCase();
+			opcaoMenuPrincipal = Leitora.getInstance().leTexto("").toUpperCase();
 			
 			System.out.println("");
 
