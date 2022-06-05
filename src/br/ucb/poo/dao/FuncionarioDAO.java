@@ -14,21 +14,22 @@ public class FuncionarioDAO {
 
 	Conexao conexao = new Conexao();
 	Connection connection = conexao.conectar();
+	
 
 	public void addFuncionario(Funcionario funcionario){
 		try {
 			
-			String sql = "INSERT INTO funcionario (endereco, telefone, salario, cpf, nome, dt_nascimento, cargo, departamento, salario, dt_admissao) VALUES (?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO funcionario (endereco, telefone, salario, cpf, nome, dt_nascimento, cargo, departamento, dt_admissao) VALUES (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstmt = connection.prepareStatement(sql);
 			
 			pstmt.setString(1, funcionario.getEndereco());
 			pstmt.setString(2, funcionario.getTelefone());
-			pstmt.setString(3, funcionario.getCpf());
-			pstmt.setString(4, funcionario.getNome());
-			pstmt.setDate(5, funcionario.getDt_nascimento());
-			pstmt.setString(6, funcionario.getCargo());
-			pstmt.setString(7, funcionario.getDepartamento());
-			pstmt.setFloat(8, funcionario.getSalario());
+			pstmt.setFloat(3, funcionario.getSalario());
+			pstmt.setString(4, funcionario.getCpf());
+			pstmt.setString(5, funcionario.getNome());
+			pstmt.setDate(6, funcionario.getDt_nascimento());
+			pstmt.setString(7, funcionario.getCargo());
+			pstmt.setString(8, funcionario.getDepartamento());
 			pstmt.setDate(9, funcionario.getDt_admissao());
 			pstmt.execute();
 			
@@ -108,7 +109,7 @@ public class FuncionarioDAO {
 	public void updateFuncionario(Funcionario funcionarioNovo) {
 		try {
             
-            String query = "UPDATE funcionario SET (endereco = ?, telefone = ?, cpf = ?, nome = ?, dt_nascimento = ?, cargo = ?, departamento = ?, salario = ?, dt_admissao = ?) WHERE id_funcionario = ?";
+            String query = "UPDATE funcionario SET endereco = ?, telefone = ?, cpf = ?, nome = ?, dt_nascimento = ?, cargo = ?, departamento = ?, salario = ?, dt_admissao = ? WHERE id_funcionario = ?";
             PreparedStatement preparedStmt = connection.prepareStatement(query);
 
             preparedStmt.setString(1, funcionarioNovo.getEndereco());
@@ -120,6 +121,7 @@ public class FuncionarioDAO {
 			preparedStmt.setString(7, funcionarioNovo.getDepartamento());
 			preparedStmt.setFloat(8, funcionarioNovo.getSalario());
 			preparedStmt.setDate(9, funcionarioNovo.getDt_admissao());
+			preparedStmt.setInt(10, funcionarioNovo.getId_funcionario());
             
             preparedStmt.executeUpdate();  
 			
@@ -141,7 +143,7 @@ public class FuncionarioDAO {
 		System.out.println("ID - Nome");
 		
 		System.out.println("--------------------------");
-		System.out.println(funcionario.getId_funcionario() + " - " + funcionario.getNome());
+		System.out.println(funcionario.getId_funcionario() + " - " + funcionario.getNome() + "\n");
 		
 		try {
 
@@ -171,3 +173,19 @@ public class FuncionarioDAO {
 	}
 	
 }
+
+
+
+/*
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('5', '1231', '1231', 'LJB231KH', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('6', '1231', '1231', '1231', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('7', '1231', '1231', 'LJ3BKH', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('8', '1231', '1231', 'LJB2KH', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('9', '1231', '1231', 'LJB1KH', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('10', '1231', '1231', 'LJB5KH', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('11', '1231', '1231', 'LJ1B1KH', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('12', '1231', '1231', 'LJ7BKH', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('13', '1231', '1231', 'LJ6BKH', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('14', '1231', '1231', 'LJBKH9', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+INSERT INTO `farmacia`.`funcionario` (`id_funcionario`, `cpf`, `telefone`, `nome`, `endereco`, `dt_nascimento`, `cargo`, `departamento`, `dt_admissao`, `salario`) VALUES ('15', '1231', '1231', '3', 'fc', '2000-01-01', 'asca', 'k ksc', '2010-01-01', '10000');
+*/

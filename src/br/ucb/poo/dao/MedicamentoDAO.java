@@ -14,8 +14,6 @@ import br.ucb.poo.factory.Conexao;
 public class MedicamentoDAO {
 	Conexao conexao = new Conexao();
 	Connection connection = conexao.conectar();
-
-	Leitora leitora = new Leitora();
 	
 	public void addMedicamento(Medicamento medicamento){
 		try {
@@ -118,7 +116,7 @@ public class MedicamentoDAO {
 		
 		
 		try {
-			String deletar = leitora.leTexto("Digite 'D' para DELETAR:");
+			String deletar = Leitora.getInstance().leTexto("Digite 'D' para DELETAR:");
 				
 				if(deletar.equals("d") || deletar.equals("D")) {
 				
@@ -152,7 +150,7 @@ public class MedicamentoDAO {
 	    System.out.println("\n\nDeseja deletar esse produto?");
 		
 		try {
-				String deletar = leitora.leTexto("Digite 'D' para DELETAR:");
+				String deletar = Leitora.getInstance().leTexto("Digite 'D' para DELETAR:");
 				
 				if(deletar.equals("d") || deletar.equals("D")) {
 				

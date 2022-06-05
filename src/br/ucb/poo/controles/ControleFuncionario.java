@@ -1,18 +1,11 @@
 package br.ucb.poo.controles;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
-
 import br.ucb.poo.beans.Funcionario;
 import br.ucb.poo.dao.FuncionarioDAO;
 
 public class ControleFuncionario {
 
 	public void gerenciarFuncionario() {
-		Leitora leitora = new Leitora();
 
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 		Funcionario funcionario = new Funcionario();
@@ -25,14 +18,13 @@ public class ControleFuncionario {
 			
 			imprimirMenuTelaInicialFuncionario();
 			
-			opcaoMenuInicial = leitora.leTexto(" ").toUpperCase();
+			opcaoMenuInicial = Leitora.getInstance().leTexto("").toUpperCase();
 
 			//MARK: - TELA INSERIR NOVO FUNCIONARIO
 			switch(opcaoMenuInicial) {
 			case "I":
 				
 				funcionario = new Funcionario();
-				
 
 				imprimirHeader();	
 
@@ -40,19 +32,19 @@ public class ControleFuncionario {
 
 				System.out.println("\n\n");
 
-				funcionario.setNome(leitora.leTexto("Insira o nome do Funcionario: "));
-				funcionario.setCpf(leitora.leTexto("Insira o CPF do Funcionario: "));
-				funcionario.setDt_nascimento(leitora.leDate("Nascimento"));
+				funcionario.setNome(Leitora.getInstance().leTexto("Insira o nome do Funcionario: "));
+				funcionario.setCpf(Leitora.getInstance().leTexto("Insira o CPF do Funcionario: "));
+				funcionario.setDt_nascimento(Leitora.getInstance().leDate("Nascimento"));
 
-				funcionario.setEndereco(leitora.leTexto("\nInsira o Endereço completo: "));
-				funcionario.setTelefone(leitora.leTexto("\nInsira um Telefone para contato: "));
+				funcionario.setEndereco(Leitora.getInstance().leTexto("\nInsira o Endereço completo: "));
+				funcionario.setTelefone(Leitora.getInstance().leTexto("\nInsira um Telefone para contato: "));
 
-				funcionario.setDepartamento(leitora.leTexto("Insira o Departamento do Funcionario: "));
-				funcionario.setCargo(leitora.leTexto("Insira o Cargo do Funcionario: "));
+				funcionario.setDepartamento(Leitora.getInstance().leTexto("Insira o Departamento do Funcionario: "));
+				funcionario.setCargo(Leitora.getInstance().leTexto("Insira o Cargo do Funcionario: "));
 				
-				funcionario.setSalario(leitora.leFloat("Insira o Salario: "));
+				funcionario.setSalario(Leitora.getInstance().leFloat("Insira o Salario: "));
 				
-				funcionario.setDt_admissao(leitora.leDate("Insira a Data de admissao do Funcionario: "));
+				funcionario.setDt_admissao(Leitora.getInstance().leDate("Insira a Data de admissao do Funcionario: "));
 
 				
 				funcionarioDAO.addFuncionario(funcionario);
@@ -76,13 +68,12 @@ public class ControleFuncionario {
 					System.out.println("\n");
 
 					System.out.println("Escolha uma opção:");
-					System.out.println("(V) Voltar para tela principal");
-					System.out.println("(E) Exibir um funcionario pelo - ID");
-					System.out.println("(A) Atualizar funcionario - ID");
-					System.out.println("(X) Apagar funcionario - ID");
+					System.out.println("V) Voltar para tela principal");
+					System.out.println("E) Exibir um funcionario pelo - ID");
+					System.out.println("A) Atualizar funcionario - ID");
+					System.out.println("D) Apagar funcionario - ID");
 
-
-					opcaoMenuListagem = leitora.leTexto("").toUpperCase();
+					opcaoMenuListagem = Leitora.getInstance().leTexto("").toUpperCase();
 
 					switch(opcaoMenuListagem) {
 					case "V":
@@ -99,7 +90,7 @@ public class ControleFuncionario {
 						System.out.println("\n\n");
 
 						do {
-							idParaPesquisa = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
+							idParaPesquisa = Leitora.getInstance().leInteiro("Informe o ID conforme apresentado na tela anterior: _");
 	
 							funcionario = funcionarioDAO.retrieveFuncionarioFromId(idParaPesquisa);
 							
@@ -123,7 +114,7 @@ public class ControleFuncionario {
 							System.out.println("(L) Voltar para listagem de funcionarios");
 						}
 
-						opcaoMenuDetalheFuncionario = leitora.leTexto("").toUpperCase();
+						opcaoMenuDetalheFuncionario = Leitora.getInstance().leTexto("").toUpperCase();
 
 						if(opcaoMenuDetalheFuncionario.equals("V")) {
 							opcaoMenuListagem = "V";
@@ -140,7 +131,7 @@ public class ControleFuncionario {
 						System.out.println("ATUALIZAR FUNCIONARIO");
 						System.out.println("\n\n");
 
-						idParaPesquisa = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
+						idParaPesquisa = Leitora.getInstance().leInteiro("Informe o ID conforme apresentado na tela anterior: _");
 
 						System.out.println("Editar");
 
@@ -156,69 +147,87 @@ public class ControleFuncionario {
 						//Menu para escolher o que alterar
 						String opcaoMenuAtualizarFuncionario = "X";
 						do {
+							System.out.println("\nDETALHES DO FUNCIONARIO ID: " + funcionarioAtual.getId_funcionario());
 
-							System.out.println("Escolha uma opção:");
-							System.out.println("(EN) Atualizar Endereco");
-							System.out.println("(TE) Atualizar Telefone");
-							System.out.println("(CP) Atualizar CPF");
-							System.out.println("(NO) Atualizar Nome");
-							System.out.println("(DN) Atualizar Data de Nascimento");
-							System.out.println("(CA) Atualizar Cargo");
-							System.out.println("(DE) Atualizar Departamento");
-							System.out.println("(SA) Atualizar Salario");
-							System.out.println("(DA) Atualizar Data de Admissao");
+							System.out.println("Nome: " + funcionarioAtual.getNome());
+							System.out.println("Endereco: " + funcionarioAtual.getEndereco());
+							System.out.println("Telefone: " + funcionarioAtual.getTelefone());
+							System.out.println("Cpf: " + funcionarioAtual.getCpf());
+							System.out.println("Nome: " + funcionarioAtual.getNome());
+							System.out.println("Data de Nascimento: " + funcionarioAtual.getDt_nascimento());
 							
 							
-							opcaoMenuAtualizarFuncionario = leitora.leTexto("OPCAO: ").toUpperCase();
+							System.out.println("\nDepartamento: " + funcionarioAtual.getDepartamento());
+							System.out.println("Cargo: " + funcionarioAtual.getCargo());
+							System.out.println("Salario: " + funcionarioAtual.getSalario());
+							System.out.println("Data de Admissao: " + funcionarioAtual.getDt_admissao());
 							
+							
+							System.out.println("\nEscolha uma opção:");
+							System.out.println("NO) Atualizar Nome");
+							System.out.println("CP) Atualizar CPF");
+							System.out.println("EN) Atualizar Endereco");
+							System.out.println("TE) Atualizar Telefone");
+							System.out.println("DN) Atualizar Data de Nascimento");
+							System.out.println("CA) Atualizar Cargo");
+							System.out.println("DE) Atualizar Departamento");
+							System.out.println("SA) Atualizar Salario");
+							System.out.println("DA) Atualizar Data de Admissao");
+							System.out.println(" X) Para sair");
+							
+							
+							opcaoMenuAtualizarFuncionario = Leitora.getInstance().leTexto("OPCAO: ").toUpperCase();
+							System.out.println("\n");
 							switch(opcaoMenuAtualizarFuncionario) {
 							case "EN":
 								System.out.println("Endereco atual:\n" + funcionarioAtual.getEndereco() + "\n novo:");
-								funcionarioNovo.setEndereco(leitora.leTexto());
+								funcionarioNovo.setEndereco(Leitora.getInstance().leTexto(""));
 								break;
 
 							case "TE":
 								System.out.println("Telefone atual:\n" + funcionarioAtual.getTelefone() + "\nTelefone novo:");
-								funcionarioNovo.setTelefone(leitora.leTexto());
+								funcionarioNovo.setTelefone(Leitora.getInstance().leTexto(""));
 								break;
 
 							case "CP":
 								System.out.println("CPF atual:\n" + funcionarioAtual.getCpf() + "\nCPF novo:");
-								funcionarioNovo.setCpf(leitora.leTexto());
+								funcionarioNovo.setCpf(Leitora.getInstance().leTexto(""));
 								break;
 
 							case "NO":
 								System.out.println("Nome atual:\n" + funcionarioAtual.getNome() + "\nNome novo:");
-								funcionarioNovo.setNome(leitora.leTexto());
+								funcionarioNovo.setNome(Leitora.getInstance().leTexto(""));
 								break;
 
 							case "DN":
 								System.out.println("Data de Nascimento atual:\n" + funcionarioAtual.getDt_nascimento() + "\nData de Nascimento nova:");
-								funcionarioNovo.setDt_nascimento(leitora.leDate());
+								funcionarioNovo.setDt_nascimento(Leitora.getInstance().leDate(""));
 								
 								break;
 
 							case "CA":
 								System.out.println("Cargo atual:\n" + funcionarioAtual.getCargo() + "\nCargo novo:");
-								funcionarioNovo.setCargo(leitora.leTexto());
+								funcionarioNovo.setCargo(Leitora.getInstance().leTexto(""));
 								break;
 
 							case "DE":
 								System.out.println("Departamento atual:\n" + funcionarioAtual.getDepartamento() + "\nDepartamento novo:");
-								funcionarioNovo.setDepartamento(leitora.leTexto());
+								funcionarioNovo.setDepartamento(Leitora.getInstance().leTexto(""));
 								break;
 
 							case "SA":
 								System.out.println("Salario atual:\n" + funcionarioAtual.getSalario() + "\nSalario novo:");
-								funcionarioNovo.setSalario(leitora.leFloat());
+								funcionarioNovo.setSalario(Leitora.getInstance().leFloat(""));
 								break;
 
 							case "DA":
 								System.out.println("Data de Admissao atual:\n" + funcionarioAtual.getDt_admissao() + "\nData de Admissao novo:");
-								funcionarioNovo.setDt_admissao(leitora.leDate());
+								funcionarioNovo.setDt_admissao(Leitora.getInstance().leDate(""));
 								break;
 							}
 						} while(!opcaoMenuAtualizarFuncionario.equals("X"));
+						
+						funcionarioDAO.updateFuncionario(funcionarioNovo);
 
 						break;
 
@@ -228,7 +237,7 @@ public class ControleFuncionario {
 
 						System.out.println("DELETAR FUNCIONARIO");
 						System.out.println("\n\n");
-						funcionarioDAO.deletarFuncionario(leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _"));
+						funcionarioDAO.deletarFuncionario(Leitora.getInstance().leInteiro("Informe o ID conforme apresentado na tela anterior: _"));
 
 						break;
 

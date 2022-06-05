@@ -1,10 +1,10 @@
 // SYSFARMA - DEVER 3
 //DUPLA: SARAH DI FÁTIMA & LUIZ CARLOS
 
-import java.util.Scanner;
-
 import br.ucb.poo.controles.ControleFuncionario;
 import br.ucb.poo.controles.ControleMedicamento;
+import br.ucb.poo.controles.Leitora;
+
 
 public class Executora {
 	static ControleMedicamento controleMedicamento;
@@ -16,9 +16,8 @@ public class Executora {
 		do {
 			imprimirHeader();
 			imprimirMenuTelaInicial();
-			
-			Scanner sc = new Scanner(System.in);
-			opcaoMenuPrincipal = sc.next().toUpperCase();
+
+			opcaoMenuPrincipal = Leitora.getInstance().leTexto("aaaaaaaa").toUpperCase();
 			
 			System.out.println("");
 
@@ -34,8 +33,7 @@ public class Executora {
 					controleFuncionario.gerenciarFuncionario();
 					break;
 			}
-			controleFuncionario = null;
-			controleMedicamento = null;
+
 		}while(!opcaoMenuPrincipal.equals("X"));
 	}
 	

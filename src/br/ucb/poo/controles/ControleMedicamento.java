@@ -6,7 +6,6 @@ import br.ucb.poo.dao.MedicamentoDAO;
 public class ControleMedicamento {
 
 	public void gerenciarMedicamento() {
-		Leitora leitora = new Leitora();
 
 		MedicamentoDAO medicamentoDAO = new MedicamentoDAO();
 		Medicamento medicamento = new Medicamento();
@@ -19,7 +18,7 @@ public class ControleMedicamento {
 
 			imprimirMenuTelaInicialMedicamento();
 			System.out.println(" ");
-			opcaoMenuInicial = leitora.leTexto("").toUpperCase();
+			opcaoMenuInicial = Leitora.getInstance().leTexto("").toUpperCase();
 
 			//MARK: - TELA INSERIR NOVO MEDICAMENTO
 			switch(opcaoMenuInicial) {
@@ -31,17 +30,17 @@ public class ControleMedicamento {
 
 				System.out.println("CADASTRO DE MEDICAMENTO");
 				System.out.println("\n\n");
-				medicamento.setNome(leitora.leTexto("Nome do Medicamento:"));
+				medicamento.setNome(Leitora.getInstance().leTexto("Nome do Medicamento:"));
 
 
-				medicamento.setPreco(leitora.leFloat("Valor do medicamento: R$ "));
+				medicamento.setPreco(Leitora.getInstance().leFloat("Valor do medicamento: R$ "));
 
 
-				medicamento.setDt_vencimento(leitora.leDate("Vencimento (dd-MM-yyyy): "));
+				medicamento.setDt_vencimento(Leitora.getInstance().leDate("Vencimento (dd-MM-yyyy): "));
 
 
 				System.out.println("");
-				medicamento.setQtd_estoque(leitora.leInteiro("Quantidade em estoque: "));
+				medicamento.setQtd_estoque(Leitora.getInstance().leInteiro("Quantidade em estoque: "));
 
 				medicamentoDAO.addMedicamento(medicamento);
 				break;
@@ -71,7 +70,7 @@ public class ControleMedicamento {
 					System.out.println("(A) Atualizar medicamento - ID");
 					System.out.println("(X) Apagar medicamento - ID");
 
-					opcaoMenuListagem = leitora.leTexto("").toUpperCase();
+					opcaoMenuListagem = Leitora.getInstance().leTexto("").toUpperCase();
 
 					switch(opcaoMenuListagem) {
 					case "V":
@@ -88,7 +87,7 @@ public class ControleMedicamento {
 
 						System.out.println("DETALHES DO MEDICAMENTO");
 						System.out.println("\n\n");
-						idParaPesquisa = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
+						idParaPesquisa = Leitora.getInstance().leInteiro("Informe o ID conforme apresentado na tela anterior: _");
 
 						medicamento = medicamentoDAO.retrieveMedicamentoFromId(idParaPesquisa);
 
@@ -111,7 +110,7 @@ public class ControleMedicamento {
 						System.out.println("(L) Voltar para listagem de medicamentos");
 						System.out.println("(X) Voltar para listagem de medicamentos");
 
-						opcaoMenuDetalheMedicamento = leitora.leTexto("OPCAO: ").toUpperCase();
+						opcaoMenuDetalheMedicamento = Leitora.getInstance().leTexto("OPCAO: ").toUpperCase();
 
 						if(opcaoMenuDetalheMedicamento.equals("V")) {
 							opcaoMenuListagem = "V";
@@ -127,7 +126,7 @@ public class ControleMedicamento {
 
 						System.out.println("ATUALIZAR MEDICAMENTO");
 						System.out.println("\n\n");
-						idParaPesquisa = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
+						idParaPesquisa = Leitora.getInstance().leInteiro("Informe o ID conforme apresentado na tela anterior: _");
 
 
 						System.out.println("Editar");
@@ -138,19 +137,19 @@ public class ControleMedicamento {
 						medicamentoAtual = medicamentoDAO.retrieveMedicamentoFromId(idParaPesquisa);
 						medicamentoNovo = medicamentoAtual;
 
-						medicamentoNovo.setNome(leitora.leTexto("Nome atual: " + medicamentoAtual.getNome()));
+						medicamentoNovo.setNome(Leitora.getInstance().leTexto("Nome atual: " + medicamentoAtual.getNome()));
 
-						medicamentoNovo.setPreco(leitora.leFloat("Preço atual: " + medicamentoAtual.getPreco()));
+						medicamentoNovo.setPreco(Leitora.getInstance().leFloat("Preço atual: " + medicamentoAtual.getPreco()));
 
 
-						medicamentoNovo.setDt_vencimento(leitora.leDate("Vencimento"));
+						medicamentoNovo.setDt_vencimento(Leitora.getInstance().leDate("Vencimento"));
 
-						medicamentoNovo.setQtd_estoque(leitora.leInteiro("Quantidade em estoque atual: " + medicamentoAtual.getQtd_estoque()));
+						medicamentoNovo.setQtd_estoque(Leitora.getInstance().leInteiro("Quantidade em estoque atual: " + medicamentoAtual.getQtd_estoque()));
 
 
 
 						System.out.println("Deseja confirmar a alteracao?");
-						String salvar = leitora.leTexto("Digite 's' para SALVAR:");
+						String salvar = Leitora.getInstance().leTexto("Digite 's' para SALVAR:");
 						if(salvar.equals("s") || salvar.equals("S")) {
 							medicamentoDAO.updateMedicamento(medicamentoNovo);
 						}
@@ -164,7 +163,7 @@ public class ControleMedicamento {
 						System.out.println("APAGAR MEDICAMENTO");
 						System.out.println("\n\n");
 						Integer idParaApagar = 0;
-						idParaApagar = leitora.leInteiro("Informe o ID conforme apresentado na tela anterior: _");
+						idParaApagar = Leitora.getInstance().leInteiro("Informe o ID conforme apresentado na tela anterior: _");
 //						System.out.println("Informe o ID conforme apresentado na tela anterior: _");
 //						Integer idParaApagar = scanner.nextInt();
 						medicamentoDAO.deletarMedicamento(idParaApagar);
