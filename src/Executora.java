@@ -1,10 +1,10 @@
 // SYSFARMA - DEVER 3
-//DUPLA: SARAH DI FÁTIMA & LUIZ CARLOS
+//DUPLA: SARAH DI FÃ�TIMA & LUIZ CARLOS
 
 import br.ucb.poo.controles.ControleFuncionario;
 import br.ucb.poo.controles.ControleMedicamento;
 import br.ucb.poo.controles.Leitora;
-
+//bão2?
 
 public class Executora {
 	static ControleMedicamento controleMedicamento;
@@ -58,7 +58,7 @@ public class Executora {
 
 		System.out.println("MENU PRINCIPAL");
 		System.out.println("\n\n");
-		System.out.println("Escolha uma opção:");
+		System.out.println("Escolha uma opÃ§Ã£o:");
 		System.out.println("(M) Gerenciar medicamentos");
 		System.out.println("(F) Gerenciar funcionarios");
 		System.out.println("(X) Encerrar programa");
